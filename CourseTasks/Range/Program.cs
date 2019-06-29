@@ -1,60 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Range
 {
-    public class Range
-    {
-        private double from;
-        private double to;
-
-        public Range(double from, double to)
-        {
-            this.from = from;
-            this.to = to;
-        }
-
-        public double getFrom()
-        {
-            return from;
-        }
-
-        public double getTo()
-        {
-            return to;
-        }
-
-        public void setFrom(double from)
-        {
-            this.from = from;
-        }
-
-        public void setTo(double to)
-        {
-            this.to = to;
-        }
-
-        public double getLength()
-        {
-
-            return (to - from);
-        }
-
-        public bool isInside(double x)
-        {
-            return (x >= from && x <= to);
-        }
-    }
+   
     class Program
     {
         static void Main(string[] args)
         {
             Console.WriteLine("Введите начало диапазона");
             double from = Convert.ToDouble(Console.ReadLine());
-            
+
             Console.WriteLine("Введите конец диапазона");
             double to = Convert.ToDouble(Console.ReadLine());
 
@@ -63,9 +18,9 @@ namespace Range
             Console.WriteLine("Введите число X");
             double x = Convert.ToDouble(Console.ReadLine());
 
-            Console.WriteLine("Длинна диапазона = " + range1.getLength());
+            Console.WriteLine("Длинна диапазона = " + range1.GetLength());
 
-            if (range1.isInside(x))
+            if (range1.IsInside(x))
             {
                 Console.WriteLine("Число принадлежит диапазону");
             }
