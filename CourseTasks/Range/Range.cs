@@ -2,29 +2,24 @@
 {
     public class Range
     {
-        public double from
-        {
-            get; set;
-        }
-        public double to
-        {
-            get; set;
-        }
+        public double From { get; set;}
+
+        public double To { get; set; }
 
         public Range(double from, double to)
         {
-            this.from = from;
-            this.to = to;
+            this.From = from;
+            this.To = to;
         }
 
         public double GetLength()
         {
-            return (to - from);
+            return (To - From);
         }
 
         public bool IsInside(double x)
         {
-            return (x >= from && x <= to);
+            return (x >= From && x <= To);
         }
     }
 }
