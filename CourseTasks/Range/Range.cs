@@ -22,7 +22,7 @@
             return (x >= From && x <= To);
         }
 
-        public static bool IntersectionIntervals(Range interval1, Range interval2)
+        public static bool IntervalCrossingCheck(Range interval1, Range interval2)
         {
             return (interval1.From <= interval2.To && interval1.To >= interval2.From);
         }
@@ -30,7 +30,7 @@
         public static double[] DifferenceIntervals(Range interval1, Range interval2)
         {
             double[] rezult = new double[4];
-            if (IntersectionIntervals(interval1, interval2))
+            if (IntervalCrossingCheck(interval1, interval2))
             {
                 if (interval1.From == interval2.From && interval1.To == interval2.To)
                 {
