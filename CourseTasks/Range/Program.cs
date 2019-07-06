@@ -26,38 +26,48 @@ namespace Range
             Console.WriteLine("Длинна диапазона 1 = " + range1.GetLength());
             Console.WriteLine("Длинна диапазона 2 = " + range2.GetLength());
 
-            double[] array = { from, to, from2, to2 };
-            Array.Sort(array);
-
-            if (Range.IntervalCrossingCheck(range1, range2))
+            if (range1.IsCheckCrossingIntervals(range2))
             {
                 Console.WriteLine("Интервалы пересекаются");
                 Console.WriteLine("Результат пересечения интервалов:");
-                Console.WriteLine("от " + array[1] + " до " + array[2]);
-                Console.WriteLine("Результат объединения интервалов:");
-                Console.WriteLine("от " + array[0] + " до " + array[3]);
+                Range[] result = range1.IsCrossingIntervals(range2);
+
+                foreach (Range interval in result)
+                {
+                    if (interval != null)
+                    {
+                        Console.WriteLine("от " + interval.From + " до " + interval.To);
+                    }
+                }
             }
             else
             {
                 Console.WriteLine("Интервалы не пересекаются");
-                Console.WriteLine("Результат объединения интервалов:");
-                Console.WriteLine("от " + array[0] + " до " + array[1] +
-                    " и " + "от " + array[2] + " до " + array[3]);
             }
 
-            double[] rezult = Range.DifferenceIntervals(range1, range2);
-            Console.WriteLine("Результат разности интервалов:");
+            Range[] resultUnion = range1.UnionIntervals(range2);
+            Console.WriteLine("Результат объединения интервалов:");
 
-            if (rezult == null)
+            foreach (Range interval in resultUnion)
             {
-                Console.WriteLine("null");
-            }
-            else
-            {
-                Console.WriteLine("от " + rezult[0] + " до " + rezult[1]);
-                if (rezult[2] != 0)
+                if (interval != null)
                 {
-                    Console.WriteLine("и от " + rezult[2] + " до " + rezult[3]);
+                    Console.WriteLine("от " + interval.From + " до " + interval.To);
+                }
+            }
+
+            Console.WriteLine("Результат разности интервалов:");
+            Range[] resultDifference = range1.DifferenceIntervals(range2);
+
+            foreach (Range interval in resultDifference)
+            {
+                if (interval != null)
+                {
+                    Console.WriteLine("от " + interval.From + " до " + interval.To);
+                }
+                else
+                {
+                    Console.WriteLine("null");
                 }
             }
             Console.ReadKey();
