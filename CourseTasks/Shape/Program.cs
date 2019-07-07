@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Shape
 {
@@ -11,14 +7,24 @@ namespace Shape
         static void Main(string[] args)
         {
             Triangle shape1 = new Triangle(3, 4, 5, 3, 4, 5);
-            Triangle shape2 = new Triangle(30, 40, 50, 30, 40, 50);
-            Circle shape3 = new Circle(3);
-            Circle shape4 = new Circle(30);
+            shape1.Name = "shape1";
+            Triangle shape2 = new Triangle(0, 0, 50, 0, 0, 50);
+            shape2.Name = "shape2";
+            Circle shape3 = new Circle(0.5);
+            shape3.Name = "shape3";
+            Circle shape4 = new Circle(1);
+            shape4.Name = "shape4";
             Rectangle shape5 = new Rectangle(3, 4);
-            Rectangle shape6 = new Rectangle(30, 40);
-            Shape[] shapes = new Shape[] { shape1, shape2, shape3, shape5, shape6 };
-            Array.Sort(shapes, new ShapeComparer());
-            Console.WriteLine(
+            shape5.Name = "shape5";
+            Rectangle shape6 = new Rectangle(1, 5);
+            shape6.Name = "shape6";
+            Square shape7 = new Square(15);
+            shape7.Name = "shape7";
+            Shape[] shapes = new Shape[] { shape1, shape2, shape3, shape4, shape5, shape6, shape7 };
+            Shape shapeMaximumArea = Shape.FindMaximumArea(shapes);
+            Console.WriteLine("Фигура с максимальной площадью:");
+            Console.WriteLine(shapeMaximumArea.ToString());
+            Console.ReadKey();
         }
     }
 }

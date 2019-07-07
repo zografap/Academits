@@ -17,5 +17,11 @@ namespace Shape
             else
                 return 0;
         }
+
+        public Shape FindMaximumArea(Shape[] shapes)
+        {
+            Array.Sort(shapes, new ShapeComparer());
+            return shapes[0];
+        }
     }
 }

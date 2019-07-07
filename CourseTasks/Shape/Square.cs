@@ -15,25 +15,34 @@ namespace Shape
             this.SideLength = sideLength;
         }
                 
-        public double GetWidth()
+        public override double GetWidth()
         {
             return SideLength;
         }
 
-        public double GetHeight()
+        public override double GetHeight()
         {
             return SideLength;
         }
 
-        public double GetArea()
+        public override double GetArea()
         {
             return SideLength * SideLength;
         }
 
-        public double GetPerimeter()
+        public override double GetPerimeter()
         {
             return SideLength * 4;
         }
-        // реализация методов GetHeight, GetArea
+
+        public override string ToString()
+        {
+            return "Имя фигуры: " + Name + "\n" +
+                "Тип фигуры: Квадрат \n" +
+                "Ширина = " + GetWidth() + "\n" +
+                "Высота = " + GetHeight() + "\n" +
+                "Площадь = " + GetArea() + "\n" +
+                "Периметр = " + GetPerimeter();
+        }
     }
 }

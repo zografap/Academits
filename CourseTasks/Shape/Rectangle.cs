@@ -19,24 +19,34 @@ namespace Shape
             this.HeightRectangle = heightRectangle;
         }
 
-        public double GetWidth()
+        public override double GetWidth()
         {
             return WidthRectangle;
         }
 
-        public double GetHeight()
+        public override double GetHeight()
         {
             return HeightRectangle;
         }
 
-        public double GetArea()
+        public override double GetArea()
         {
             return HeightRectangle * WidthRectangle;
         }
 
-        public double GetPerimeter()
+        public override double GetPerimeter()
         {
             return WidthRectangle * 2 + HeightRectangle * 2;
+        }
+
+        public override string ToString()
+        {
+            return "Имя фигуры: " + Name + "\n" +
+                "Тип фигуры: Прямоугольник \n" +
+                "Ширина = " + GetWidth() + "\n" +
+                "Высота = " + GetHeight() + "\n" +
+                "Площадь = " + GetArea() + "\n" +
+                "Периметр = " + GetPerimeter();
         }
     }
 }

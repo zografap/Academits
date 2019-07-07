@@ -12,27 +12,38 @@ namespace Shape
 
         public Circle(double radius)
         {
-            this.Radius = radius;
+            Radius = radius;
         }
 
-        public double GetWidth()
+        public override double GetWidth()
         {
             return Radius * 2;
         }
 
-        public double GetHeight()
+        public override double GetHeight()
         {
             return Radius * 2;
         }
 
-        public double GetArea()
+        public override double GetArea()
         {
             return Math.PI * Math.Pow(Radius, 2);
         }
 
-        public double GetPerimeter()
+        public override double GetPerimeter()
         {
             return 2 * Math.PI * Radius;
+        }
+
+        public override string ToString()
+        {
+            return "Имя фигуры: " + Name + "\n" +
+                "Тип фигуры: Окружность \n" +
+                "Радиус = " + Radius + "\n" +
+                "Ширина = " + GetWidth() + "\n" +
+                "Высота = " + GetHeight() + "\n" +
+                 "Площадь = " + GetArea() + "\n" +
+                "Периметр = " + GetPerimeter();
         }
     }
 }

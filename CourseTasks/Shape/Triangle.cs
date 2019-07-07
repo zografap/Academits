@@ -22,42 +22,55 @@ namespace Shape
 
         public Triangle(double x1, double y1, double x2, double y2, double x3, double y3 )
         {
-            this.X1 = x1;
+            X1 = x1;
 
-            this.Y1 = y1;
+            Y1 = y1;
 
-            this.X2 = x2;
+            X2 = x2;
 
-            this.Y2 = y2;
+            Y2 = y2;
 
-            this.X3 = x3;
+            X3 = x3;
 
-            this.Y3 = y3;
+            Y3 = y3;
         }
 
-        public double GetWidth()
+        public override double GetWidth()
         {
             double[] arrayX = { X1, X2, X3 };
             return arrayX.Max()- arrayX.Min();
         }
 
-        public double GetHeight()
+        public override double GetHeight()
         {
             double[] arrayY = { Y1, Y2, Y3 };
             return arrayY.Max() - arrayY.Min();
         }
 
-        public double GetArea()
+        public override double GetArea()
         {
             return 0.5 * GetWidth();
         }
 
-        public double GetPerimeter()
+        public override double GetPerimeter()
         {
             return Math.Sqrt(Math.Pow((X1 - X2), 2) + Math.Pow((Y1 - Y2), 2)) +
                 Math.Sqrt(Math.Pow((X2 - X3), 2) + Math.Pow((Y2 - Y3), 2)) +
                 Math.Sqrt(Math.Pow((X3 - X1), 2) + Math.Pow((Y3 - Y1), 2));
         }
-        
+
+        public override string ToString()
+        {
+            return "Имя фигуры: " + Name + "\n" +
+                "Тип фигуры: Треугольник \n" +
+                "X1 = " + X1 + "  " + "Y1 = " + Y1 + "\n" +
+                "X2 = " + X2 + "  " + "Y2 = " + Y2 + "\n" +
+                "X3 = " + X3 + "  " + "Y3 = " + Y3 + "\n" +
+                "Ширина = " + GetWidth() + "\n" +
+                "Высота = " + GetHeight() + "\n" +
+                "Площадь = " + GetArea() + "\n" +
+                "Периметр = " + GetPerimeter();
+        }
+
     }
 }
