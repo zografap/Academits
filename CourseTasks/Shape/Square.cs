@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Shape
 {
     public class Square : Shape, IShape
@@ -12,9 +7,9 @@ namespace Shape
 
         public Square(double sideLength)
         {
-            this.SideLength = sideLength;
+            SideLength = sideLength;
         }
-                
+
         public override double GetWidth()
         {
             return SideLength;

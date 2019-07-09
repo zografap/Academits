@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Shape
 {
@@ -20,7 +17,7 @@ namespace Shape
 
         public double Y3 { get; set; }
 
-        public Triangle(double x1, double y1, double x2, double y2, double x3, double y3 )
+        public Triangle(double x1, double y1, double x2, double y2, double x3, double y3)
         {
             X1 = x1;
 
@@ -38,7 +35,7 @@ namespace Shape
         public override double GetWidth()
         {
             double[] arrayX = { X1, X2, X3 };
-            return arrayX.Max()- arrayX.Min();
+            return arrayX.Max() - arrayX.Min();
         }
 
         public override double GetHeight()
@@ -71,6 +68,5 @@ namespace Shape
                 "Площадь = " + GetArea() + "\n" +
                 "Периметр = " + GetPerimeter();
         }
-
     }
 }

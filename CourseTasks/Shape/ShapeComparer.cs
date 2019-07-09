@@ -18,10 +18,14 @@ namespace Shape
                 return 0;
         }
 
-        public Shape FindMaximumArea(Shape[] shapes)
+        public int ComparePerimetr(Shape shape1, Shape shape2)
         {
-            Array.Sort(shapes, new ShapeComparer());
-            return shapes[0];
+            if (shape1.GetPerimeter() > shape2.GetPerimeter())
+                return 1;
+            else if (shape1.GetPerimeter() < shape2.GetPerimeter())
+                return -1;
+            else
+                return 0;
         }
     }
 }
