@@ -16,102 +16,74 @@ namespace Range
 
         public double GetLength()
         {
-            return (To - From);
+            return To - From;
         }
 
         public bool IsInside(double x)
         {
-            return (x >= From && x <= To);
+            return x >= From && x <= To;
         }
 
-        public bool IsCheckCrossingIntervals(Range interval)
+        public bool IsCrossingIntervals(Range interval)
         {
-            return (From <= interval.To && To >= interval.From);
+            return From <= interval.To && To >= interval.From;
         }
 
-        public Range[] IsCrossingIntervals(Range interval)
+        public Range GetIntervalsCrossing(Range interval)
         {
-            Range[] result = new Range[2];
             double[] array = { From, To, interval.From, interval.To };
             Array.Sort(array);
 
-            if (IsCheckCrossingIntervals(interval))
+            if (IsCrossingIntervals(interval))
             {
-                result[0] = new Range(array[1], array[2]);
+                Range result = new Range(array[1], array[2]);
                 return result;
             }
-            result[0] = new Range(array[0], array[1]);
-            result[1] = new Range(array[2], array[3]);
-            return result;
+            return null;
         }
 
         public Range[] UnionIntervals(Range interval)
         {
-            Range[] result = new Range[2];
             double[] array = { From, To, interval.From, interval.To };
             Array.Sort(array);
 
-            if (IsCheckCrossingIntervals(interval))
+            if (IsCrossingIntervals(interval))
             {
-                result[0] = new Range(array[0], array[3]);
-                return result;
+                Range result = new Range(array[0], array[3]);
+                Range[] resultArray1 = new[] { result };
+                return resultArray1;
             }
-
-            result[0] = new Range(array[0], array[1]);
-            result[1] = new Range(array[2], array[3]);
-            return result;
+            Range result1 = new Range(array[0], array[1]);
+            Range result2 = new Range(array[2], array[3]);
+            Range[] resultArray2 = { result1, result2 };
+            return resultArray2;
         }
 
         public Range[] DifferenceIntervals(Range interval)
         {
-            Range[] result = new Range[2];
-
-            if (IsCheckCrossingIntervals(interval))
+            if (IsCrossingIntervals(interval))
             {
-                if (From == interval.From && To == interval.To)
+                if (From >= interval.From && To <= interval.To)
                 {
+                    return null;
+                }
+                if (From <= interval.From && To >= interval.To)
+                {
+                    Range[] result = { new Range(From, interval.From), new Range(interval.To, To) };
                     return result;
                 }
-                if (From == interval.From && To > interval.To)
+                if (From <= interval.From && To <= interval.To)
                 {
-                    result[0] = new Range(interval.To, To);
+                    Range[] result = { new Range(From, interval.From) };
                     return result;
                 }
-                if (From == interval.From && To < interval.To)
+                if (From >= interval.From && To >= interval.To)
                 {
-                    return result;
-                }
-                if (From > interval.From && To == interval.To)
-                {
-                    return result;
-                }
-                if (From < interval.From && To == interval.To)
-                {
-                    result[0] = new Range(From, interval.From);
-                    return result;
-                }
-                if (From > interval.From && To < interval.To)
-                {
-                    return result;
-                }
-                if (From < interval.From && To > interval.To)
-                {
-                    result[0] = new Range(From, interval.From);
-                    result[1] = new Range(interval.To, To);
-                    return result;
-                }
-                if (From < interval.From && To < interval.To)
-                {
-                    result[0] = new Range(From, interval.From);
-                    return result;
-                }
-                if (From > interval.From && To > interval.To)
-                {
-                    result[0] = new Range(From, interval.From);
+                    Range[] result = { new Range(interval.To, To) };
                     return result;
                 }
             }
-            return result;
+            return null;
         }
     }
-} 
+}

@@ -26,19 +26,12 @@ namespace Range
             Console.WriteLine("Длинна диапазона 1 = " + range1.GetLength());
             Console.WriteLine("Длинна диапазона 2 = " + range2.GetLength());
 
-            if (range1.IsCheckCrossingIntervals(range2))
+            if (range1.IsCrossingIntervals(range2))
             {
                 Console.WriteLine("Интервалы пересекаются");
                 Console.WriteLine("Результат пересечения интервалов:");
-                Range[] result = range1.IsCrossingIntervals(range2);
-
-                foreach (Range interval in result)
-                {
-                    if (interval != null)
-                    {
-                        Console.WriteLine("от " + interval.From + " до " + interval.To);
-                    }
-                }
+                Range result = range1.GetIntervalsCrossing(range2);
+                Console.WriteLine("от " + result.From + " до " + result.To);
             }
             else
             {
@@ -58,16 +51,23 @@ namespace Range
 
             Console.WriteLine("Результат разности интервалов:");
             Range[] resultDifference = range1.DifferenceIntervals(range2);
-
-            foreach (Range interval in resultDifference)
+            if (resultDifference == null)
             {
-                if (interval != null)
+                Console.WriteLine("null");
+            }
+            else
+            {
+
+                foreach (Range interval in resultDifference)
                 {
-                    Console.WriteLine("от " + interval.From + " до " + interval.To);
-                }
-                else
-                {
-                    Console.WriteLine("null");
+                    if (interval != null)
+                    {
+                        Console.WriteLine("от " + interval.From + " до " + interval.To);
+                    }
+                    else
+                    {
+                        Console.WriteLine("null");
+                    }
                 }
             }
             Console.ReadKey();
