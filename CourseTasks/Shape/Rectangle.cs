@@ -1,37 +1,39 @@
 ﻿
 namespace Shape
 {
-    class Rectangle : Shape, IShape
+    class Rectangle : IShape
     {
-        public double WidthRectangle { get; set; }
+        private double Width { get; set; }
 
-        public double HeightRectangle { get; set; }
+        private double Height { get; set; }
 
-        public Rectangle(double widthRectangle, double heightRectangle)
+        public string Name { get; set; }
+
+        public Rectangle(double width, double height)
         {
-            this.WidthRectangle = widthRectangle;
+            Width = width;
 
-            this.HeightRectangle = heightRectangle;
+            Height = height;
         }
 
-        public override double GetWidth()
+        public double GetWidth()
         {
-            return WidthRectangle;
+            return Width;
         }
 
-        public override double GetHeight()
+        public double GetHeight()
         {
-            return HeightRectangle;
+            return Height;
         }
 
-        public override double GetArea()
+        public double GetArea()
         {
-            return HeightRectangle * WidthRectangle;
+            return Height * Width;
         }
 
-        public override double GetPerimeter()
+        public double GetPerimeter()
         {
-            return WidthRectangle * 2 + HeightRectangle * 2;
+            return Width * 2 + Height * 2;
         }
 
         public override string ToString()
@@ -42,6 +44,32 @@ namespace Shape
                 "Высота = " + GetHeight() + "\n" +
                 "Площадь = " + GetArea() + "\n" +
                 "Периметр = " + GetPerimeter();
+        }
+
+        public override bool Equals(object o)
+        {
+            if (ReferenceEquals(o, this))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(o, null) || o.GetType() != this.GetType())
+            {
+                return false;
+            }
+
+            Rectangle p = (Rectangle)o;
+
+            return Width == p.Width && Height == p.Height;
+        }
+
+        public override int GetHashCode()
+        {
+            int prime = 37;
+            int hash = 1;
+            hash = prime * hash + Width.GetHashCode();
+            hash = prime * hash + Height.GetHashCode();
+            return hash;
         }
     }
 }
