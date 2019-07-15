@@ -24,66 +24,84 @@ namespace Range
             return x >= From && x <= To;
         }
 
-        public bool IsCrossingIntervals(Range interval)
+        public bool IsCrossing(Range interval)
         {
             return From <= interval.To && To >= interval.From;
         }
 
-        public Range GetIntervalsCrossing(Range interval)
+        public Range GetIntersection(Range range)
         {
-            double[] array = { From, To, interval.From, interval.To };
-            Array.Sort(array);
-
-            if (IsCrossingIntervals(interval))
+            if (From >= range.To || range.From >= To)
             {
-                Range result = new Range(array[1], array[2]);
-                return result;
+                return null;
             }
-            return null;
+
+            if (From <= range.From && To >= range.To)
+            {
+                return new Range(range.From, range.To);
+            }
+
+            if (From > range.From && To < range.To)
+            {
+                return new Range(From, To);
+            }
+
+            if (From <= range.From && To <= range.To)
+            {
+                return new Range(range.From, To);
+            }
+
+            return new Range(From, range.To);
         }
 
-        public Range[] UnionIntervals(Range interval)
+        public Range[] GetUnion(Range range)
         {
-            double[] array = { From, To, interval.From, interval.To };
-            Array.Sort(array);
-
-            if (IsCrossingIntervals(interval))
+            if (From > range.To || range.From > To)
             {
-                Range result = new Range(array[0], array[3]);
-                Range[] resultArray1 = new[] { result };
-                return resultArray1;
+                return new Range[] { new Range(From, To), new Range(range.From, range.To) };
             }
-            Range result1 = new Range(array[0], array[1]);
-            Range result2 = new Range(array[2], array[3]);
-            Range[] resultArray2 = { result1, result2 };
-            return resultArray2;
+
+            if (From <= range.From && To >= range.To)
+            {
+                return new Range[] { new Range(From, To) };
+            }
+
+            if (From > range.From && To < range.To)
+            {
+                return new Range[] { new Range(range.From, range.To) };
+            }
+
+            if (From <= range.From && To <= range.To)
+            {
+                return new Range[] { new Range(From, range.To) };
+            }
+
+            return new Range[] { new Range(range.From, To) };
         }
 
-        public Range[] DifferenceIntervals(Range interval)
+        public Range[] DifferenceIntervals(Range range)
         {
-            if (IsCrossingIntervals(interval))
+            if (From > range.To || range.From > To)
             {
-                if (From >= interval.From && To <= interval.To)
-                {
-                    return null;
-                }
-                if (From <= interval.From && To >= interval.To)
-                {
-                    Range[] result = { new Range(From, interval.From), new Range(interval.To, To) };
-                    return result;
-                }
-                if (From <= interval.From && To <= interval.To)
-                {
-                    Range[] result = { new Range(From, interval.From) };
-                    return result;
-                }
-                if (From >= interval.From && To >= interval.To)
-                {
-                    Range[] result = { new Range(interval.To, To) };
-                    return result;
-                }
+                return new Range[] { new Range(From, To) };
             }
-            return null;
+
+            if (From < range.From && To > range.To)
+            {
+                return new Range[] { new Range(From, range.From), new Range(range.To, To) };
+            }
+
+            if (From >= range.From && To <= range.To)
+            {
+                return new Range[0];
+            }
+
+            if (From <= range.From && To <= range.To)
+            {
+                return new Range[] { new Range(From, range.From) };
+            }
+
+            return new Range[] { new Range(range.To, To) };
         }
     }
 }
