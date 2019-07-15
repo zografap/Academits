@@ -44,8 +44,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Shapes\Circle.cs" />
-    <Compile Include="MaximumArea.cs" />
-    <Compile Include="MaximumPerimeter.cs" />
     <Compile Include="PerimeterComparer.cs" />
     <Compile Include="IShape.cs" />
     <Compile Include="Program.cs" />

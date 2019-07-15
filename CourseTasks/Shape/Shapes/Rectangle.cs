@@ -1,5 +1,7 @@
 ﻿
-namespace Shape
+using System;
+
+namespace Shape.Shapes
 {
     class Rectangle : IShape
     {
@@ -38,11 +40,11 @@ namespace Shape
 
         public override string ToString()
         {
-            return "Имя фигуры: " + Name + "\n" +
-                "Тип фигуры: Прямоугольник \n" +
-                "Ширина = " + GetWidth() + "\n" +
-                "Высота = " + GetHeight() + "\n" +
-                "Площадь = " + GetArea() + "\n" +
+            return "Имя фигуры: " + Name + Environment.NewLine +
+                "Тип фигуры: Прямоугольник" + Environment.NewLine +
+                "Ширина = " + GetWidth() + Environment.NewLine +
+                "Высота = " + GetHeight() + Environment.NewLine +
+                "Площадь = " + GetArea() + Environment.NewLine +
                 "Периметр = " + GetPerimeter();
         }
 

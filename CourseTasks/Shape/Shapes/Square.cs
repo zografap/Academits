@@ -1,9 +1,9 @@
 ﻿
 using System;
 
-namespace Shape
+namespace Shape.Shapes
 {
-    public class Square :IShape
+    public class Square : IShape
     {
         public double SideLength { get; set; }
 
@@ -14,22 +14,22 @@ namespace Shape
             SideLength = sideLength;
         }
 
-        public  double GetWidth()
+        public double GetWidth()
         {
             return SideLength;
         }
 
-        public  double GetHeight()
+        public double GetHeight()
         {
             return SideLength;
         }
 
-        public  double GetArea()
+        public double GetArea()
         {
             return SideLength * SideLength;
         }
 
-        public  double GetPerimeter()
+        public double GetPerimeter()
         {
             return SideLength * 4;
         }

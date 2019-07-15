@@ -6,8 +6,7 @@ namespace Shape
     {
         public int Compare(IShape shape1, IShape shape2)
         {
-         return   shape1.GetPerimeter().CompareTo(shape2.GetPerimeter());
+            return shape1.GetPerimeter().CompareTo(shape2.GetPerimeter());
         }
-
     }
 }

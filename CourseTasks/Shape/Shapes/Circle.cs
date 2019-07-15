@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Shape
+namespace Shape.Shapes
 {
     class Circle : IShape
     {
@@ -13,29 +13,29 @@ namespace Shape
             Radius = radius;
         }
 
-        public  double GetWidth()
+        public double GetWidth()
         {
             return Radius * 2;
         }
 
-        public  double GetHeight()
+        public double GetHeight()
         {
             return Radius * 2;
         }
 
-        public  double GetArea()
+        public double GetArea()
         {
             return Math.PI * Math.Pow(Radius, 2);
         }
 
-        public  double GetPerimeter()
+        public double GetPerimeter()
         {
             return 2 * Math.PI * Radius;
         }
 
         public override string ToString()
         {
-            return "Имя фигуры: " + Name + Environment.NewLine + 
+            return "Имя фигуры: " + Name + Environment.NewLine +
                 "Тип фигуры: Окружность" + Environment.NewLine +
                 "Радиус = " + Radius + Environment.NewLine +
                 "Ширина = " + GetWidth() + Environment.NewLine +
@@ -66,6 +66,7 @@ namespace Shape
             int prime = 37;
             int hash = 1;
             hash = prime * hash + Radius.GetHashCode();
+
             return hash;
         }
     }

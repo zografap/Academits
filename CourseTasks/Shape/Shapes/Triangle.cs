@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Shape
+namespace Shape.Shapes
 {
     class Triangle : IShape
     {
@@ -51,15 +51,14 @@ namespace Shape
             return 0.5 * GetWidth();
         }
 
-        public double GetDistance(double x1, double y1, double x2, double y2)
+        static double GetDistance(double x1, double y1, double x2, double y2)
         {
             return Math.Sqrt(Math.Pow((x1 - x2), 2) + Math.Pow((y1 - y2), 2));
         }
 
         public double GetPerimeter()
         {
-            return GetDistance(X1, Y1, X2, Y2) + GetDistance(X2, Y2, X3, Y3) +
-                GetDistance(X3, Y3, X1, Y1);
+            return GetDistance(X1, Y1, X2, Y2) + GetDistance(X2, Y2, X3, Y3) + GetDistance(X3, Y3, X1, Y1);
         }
 
         public override string ToString()
