@@ -47,7 +47,7 @@ namespace Range
             }
 
             Console.WriteLine("Результат разности интервалов:");
-            Range[] resultDifference = range1.DifferenceIntervals(range2);
+            Range[] resultDifference = range1.GetDifference(range2);
 
             if (resultDifference.Length == 0)
             {

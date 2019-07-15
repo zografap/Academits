@@ -79,7 +79,7 @@ namespace Range
             return new Range[] { new Range(range.From, To) };
         }
 
-        public Range[] DifferenceIntervals(Range range)
+        public Range[] GetDifference(Range range)
         {
             if (From > range.To || range.From > To)
             {
