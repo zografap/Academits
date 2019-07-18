@@ -2,8 +2,9 @@
 using Vec = Vector.Vector;
 namespace Matrix
 {
-    class Matrix : Vec
+       class Matrix
     {
+        private int N { get; set; }
         private int M { get; set; }
         public Vec[] MatrixArray { get; set; }
 
@@ -27,6 +28,20 @@ namespace Matrix
             {
                 MatrixArray[i] = vector;
             }
+        }
+
+        public override string ToString()
+        {
+            string stringOut = "{ ";
+
+            for (int i = 0; i < MatrixArray.Length - 1; i++)
+            {
+                stringOut = stringOut + MatrixArray[i].ToString() + ", ";
+            }
+
+            stringOut = stringOut + "}";
+
+            return stringOut;
         }
     }
 }

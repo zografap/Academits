@@ -5,20 +5,20 @@ namespace Shape
 {
     class Program
     {
+        static IShape GetShapeMaximumArea(IShape[] figures)
+        {
+            Array.Sort(figures, new AreaComparer());
+            return figures[figures.Length - 1];
+        }
+
+        static IShape GetFigureSecondLargestPerimeter(IShape[] figures)
+        {
+            Array.Sort(figures, new PerimeterComparer());
+            return figures[figures.Length - 2];
+        }
+
         static void Main(string[] args)
         {
-            IShape GetShapeMaximumArea(IShape[] figures)
-            {
-                Array.Sort(figures, new AreaComparer());
-                return figures[figures.Length - 1];
-            }
-
-            IShape GetFigureSecondLargestPerimeter(IShape[] figures)
-            {
-                Array.Sort(figures, new PerimeterComparer());
-                return figures[figures.Length - 2];
-            }
-
             Triangle shape1 = new Triangle(3, 4, 5, 3, 4, 5);
             shape1.Name = "shape1";
 
