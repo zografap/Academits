@@ -2,9 +2,9 @@
 
 namespace Vector
 {
-    class Vector
+    public class Vector
     {
-        private int N { get; set; }
+        public int N { get; set; }
         public double[] Array { get; set; }
 
         public Vector(int n)
