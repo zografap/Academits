@@ -2,31 +2,51 @@
 using Vec = Vector.Vector;
 namespace Matrix
 {
-       class Matrix
+    class Matrix
     {
-        private int N { get; set; }
-        private int M { get; set; }
-        public Vec[] MatrixArray { get; set; }
+        public int N { get; set; }
+        public int M { get; set; }
+        private Vec[] VectorArray { get; set; }
+        private double[] MatrixArray { get; set; }
 
-        public Matrix(int n, int m)
+        public Matrix(int m, int n)
         {
-            if (n <= 0 || m <= 0)
-            {
-                throw new ArgumentException("n и m должны быть > 0", nameof(n));
-            }
-            Vec vector = new Vec(n);
-            vector.N = n;
+            M = m;
+            N = n;
 
-            MatrixArray = new Vec[m];
-
-            for (int i = 0; i < n - 1; i++)
+            if (N <= 0 || M <= 0)
             {
-                vector.Array[i] = 0;
+                throw new ArgumentException("n и m должны быть > 0", nameof(N));
             }
 
-            for (int i = 0; i < m - 1; i++)
+            MatrixArray = new double[m];
+            VectorArray = new Vec[m];
+            Vec vector = new Vec(N);
+
+            //for (int i = 0; i < N - 1; i++)
+            //{
+            //    vector.Components[i] = 0;
+            //}
+            for (int i = 0; i < M - 1; i++)
             {
-                MatrixArray[i] = vector;
+                VectorArray[i] = vector;
+            }
+        }
+
+        public Matrix(Matrix matrix)
+        {
+            VectorArray = new Vec[matrix.M];
+            Vec vector = new Vec(matrix.N);
+
+            Matrix matrixKopy = new Matrix(matrix.N, matrix.M);
+            for (int i = 0; i < matrix.M; ++i)
+            {
+                matrixKopy.VectorArray[i] = new Vec(matrix.VectorArray[i]);
+                //for (int j = 0; j < matrix.N - 1; j++)
+                //{
+                //    vector.Components[j] = matrix.VectorArray[j].Components[i];
+
+                //}
             }
         }
 
@@ -34,7 +54,8 @@ namespace Matrix
         {
             string stringOut = "{ ";
 
-            for (int i = 0; i < MatrixArray.Length - 1; i++)
+
+            for (int i = 0; i < M - 1; i++)
             {
                 stringOut = stringOut + MatrixArray[i].ToString() + ", ";
             }
