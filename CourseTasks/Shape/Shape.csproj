@@ -43,7 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ShapeMaximumArea.cs" />
     <Compile Include="Shapes\Circle.cs" />
     <Compile Include="PerimeterComparer.cs" />
     <Compile Include="IShape.cs" />

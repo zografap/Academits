@@ -5,16 +5,16 @@ namespace Shape
 {
     class Program
     {
-        static IShape GetShapeMaximumArea(IShape[] figures)
+        public static IShape GetShapeWithMaximumArea(IShape[] shape)
         {
-            Array.Sort(figures, new AreaComparer());
-            return figures[figures.Length - 1];
+            Array.Sort(shape, new AreaComparer());
+            return shape[shape.Length - 1];
         }
 
-        static IShape GetFigureSecondLargestPerimeter(IShape[] figures)
+        public static IShape GetShapeWithSecondLargestPerimeter(IShape[] shape)
         {
-            Array.Sort(figures, new PerimeterComparer());
-            return figures[figures.Length - 2];
+            Array.Sort(shape, new PerimeterComparer());
+            return shape[shape.Length - 2];
         }
 
         static void Main(string[] args)
@@ -42,11 +42,11 @@ namespace Shape
 
             IShape[] shapes = new IShape[] { shape1, shape2, shape3, shape4, shape5, shape6, shape7 };
 
-            IShape shapeMaximumArea = GetShapeMaximumArea(shapes);
+            IShape shapeMaximumArea = GetShapeWithMaximumArea(shapes);
             Console.WriteLine("Фигура с максимальной площадью:");
             Console.WriteLine(shapeMaximumArea.ToString());
 
-            IShape shapeSecondLargestPerimeter = GetFigureSecondLargestPerimeter(shapes);
+            IShape shapeSecondLargestPerimeter = GetShapeWithSecondLargestPerimeter(shapes);
             Console.WriteLine("Фигура со вторым по величине периметром:");
             Console.WriteLine(shapeSecondLargestPerimeter.ToString());
 
