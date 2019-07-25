@@ -10,7 +10,6 @@ namespace Vector
         public Vector(int n)
         {
             if (n <= 0)
-
             {
                 throw new ArgumentException("n должно быть > 0", nameof(n));
             }
@@ -21,7 +20,6 @@ namespace Vector
         public Vector(Vector vector)
         {
             if (vector.Components.Length == 0)
-
             {
                 throw new ArgumentException("длинна вектора должна быть > 0", nameof(vector.Components.Length));
             }
@@ -34,46 +32,23 @@ namespace Vector
         public Vector(double[] array)
         {
             if (array.Length == 0)
-
             {
                 throw new ArgumentException("длинна массива должна быть > 0", nameof(array.Length));
             }
 
             Components = new double[array.Length];
-
-            for (int i = 0; i < Components.Length; i++)
-            {
-                Components[i] = array[i];
-            }
+            Array.Copy(array, Components, array.Length);
         }
 
         public Vector(int n, double[] array)
         {
             if (n <= 0)
-
             {
                 throw new ArgumentException("n должно быть > 0", nameof(n));
             }
 
-            if (array.Length == 0)
-
-            {
-                throw new ArgumentException("длинна массива должна быть > 0", nameof(array.Length));
-            }
-
             Components = new double[n];
-
-            for (int i = 0; i < n - 1; i++)
-            {
-                if (i >= array.Length)
-                {
-                    Components[i] = 0;
-                }
-                else
-                {
-                    Components[i] = array[i];
-                }
-            }
+            Array.Copy(array, Components, array.Length);
         }
 
         public int GetSize()
@@ -94,7 +69,8 @@ namespace Vector
             {
                 foreach (int e in Components)
                 {
-                    sb.Append(e + ", ");
+                    sb.Append(e);
+                    sb.Append(", ");
                 }
             }
 
@@ -106,107 +82,73 @@ namespace Vector
 
         public Vector GetSumVector(Vector vector)
         {
-            if (Components.Length == vector.Components.Length)
+            double[] array1 = new double[Components.Length];
+            double[] array2 = new double[Components.Length];
+
+            if (Components.Length < vector.Components.Length)
             {
-                for (int i = 0; i < Components.Length; i++)
-                {
-                    Components[i] = Components[i] + vector.Components[i];
-                }
-                return this;
+                array1 = new double[vector.Components.Length];
+                array2 = new double[vector.Components.Length];
+                Array.Copy(Components, array1, Components.Length);
+                Array.Copy(vector.Components, array2, vector.Components.Length);
             }
-            else if (Components.Length > vector.Components.Length)
+            else if (Components.Length >= vector.Components.Length)
             {
-                for (int i = 0; i < Components.Length; i++)
-                {
-                    if (i >= vector.Components.Length)
-                    {
-                        Components[i] = Components[i];
-                    }
-                    else
-                    {
-                        Components[i] = Components[i] + vector.Components[i];
-                    }
-                }
-                return this;
+                array1 = new double[Components.Length];
+                array2 = new double[Components.Length];
+                Array.Copy(Components, array1, Components.Length);
+                Array.Copy(vector.Components, array2, vector.Components.Length);
             }
-            else
+
+            for (int i = 0; i < array1.Length; i++)
             {
-                for (int i = 0; i < Components.Length; i++)
-                {
-                    if (i < Components.Length)
-                    {
-                        Components[i] = Components[i] + vector.Components[i];
-                    }
-                    else
-                    {
-                        Components[i] = vector.Components[i];
-                    }
-                }
-                return this;
+                array1[i] = array1[i] + array2[i];
             }
+
+            return new Vector(array1);
         }
 
         public Vector GetDifferenceVector(Vector vector)
         {
-            if (Components.Length == vector.Components.Length)
-            {
-                for (int i = 0; i < Components.Length; i++)
-                {
-                    Components[i] = Components[i] - vector.Components[i];
-                }
-                return this;
-            }
-            else if (Components.Length > vector.Components.Length)
-            {
-                for (int i = 0; i < Components.Length; i++)
-                {
-                    if (i >= vector.Components.Length)
-                    {
-                        Components[i] = Components[i];
-                    }
-                    else
-                    {
-                        Components[i] = Components[i] - vector.Components[i];
-                    }
-                }
-                return this;
-            }
-            else
-            {
-                for (int i = 0; i < Components.Length; i++)
-                {
-                    if (i < Components.Length)
-                    {
-                        Components[i] = Components[i] - vector.Components[i];
-                    }
-                    else
-                    {
-                        Components[i] = 0 - vector.Components[i];
-                    }
-                }
+            double[] array1 = new double[Components.Length];
+            double[] array2 = new double[Components.Length];
 
-                return this;
+            if (Components.Length < vector.Components.Length)
+            {
+                array1 = new double[vector.Components.Length];
+                array2 = new double[vector.Components.Length];
+                Array.Copy(Components, array1, Components.Length);
+                Array.Copy(vector.Components, array2, vector.Components.Length);
             }
+            else if (Components.Length >= vector.Components.Length)
+            {
+                array1 = new double[Components.Length];
+                array2 = new double[Components.Length];
+                Array.Copy(Components, array1, Components.Length);
+                Array.Copy(vector.Components, array2, vector.Components.Length);
+            }
+
+            for (int i = 0; i < array1.Length; i++)
+            {
+                array1[i] = array1[i] - array2[i];
+            }
+
+            return new Vector(array1);
         }
 
-        public Vector GetMultipliedScalar(double scalar)
+        public Vector MultipliedScalar(double scalar)
         {
             for (int i = 0; i < Components.Length; i++)
             {
-                Components[i] = Components[i] * scalar;
+                Components[i] *= scalar;
             }
 
             return this;
         }
 
-        public Vector Expand()
+        public Vector Reversal()
         {
-            for (int i = 0; i < Components.Length; i++)
-            {
-                Components[i] = Components[i] * -1;
-            }
-
-            return this;
+            return MultipliedScalar(-1);
         }
 
         public double GetLength()
@@ -223,10 +165,9 @@ namespace Vector
 
         public double GetComponents(int index)
         {
-            if (index < 0 || index > Components.Length)
-
+            if (index < 0 || index >= Components.Length)
             {
-                throw new ArgumentException("index должно быть от 0 до " + Components.Length, nameof(index));
+                throw new IndexOutOfRangeException("index должно быть от 0 до " + Components.Length);
             }
 
             return Components[index];
@@ -234,16 +175,15 @@ namespace Vector
 
         public void SetComponents(int index, double component)
         {
-            if (index < 0 || index > Components.Length)
-
+            if (index < 0 || index >= Components.Length)
             {
-                throw new ArgumentException("index должно быть от 0 до " + Components.Length, nameof(index));
+                throw new IndexOutOfRangeException("index должно быть от 0 до " + Components.Length);
             }
 
             Components[index] = component;
         }
 
-        bool IsArrayCompare(double[] a, double[] b)
+        public bool IsArrayEquals(double[] a, double[] b)
         {
             if (a.Length != b.Length)
             {
@@ -275,7 +215,7 @@ namespace Vector
 
             Vector p = (Vector)o;
 
-            return IsArrayCompare(Components, p.Components);
+            return IsArrayEquals(Components, p.Components);
         }
 
         public override int GetHashCode()
@@ -293,46 +233,38 @@ namespace Vector
 
         public static Vector GetSum(Vector vector1, Vector vector2)
         {
-            return vector1.GetSumVector(vector2);
+            return new Vector(vector1.GetSumVector(vector2));
         }
 
         public static Vector GetDifference(Vector vector1, Vector vector2)
         {
-            return vector1.GetDifferenceVector(vector2);
+            return new Vector(vector1.GetDifferenceVector(vector2));
         }
 
         public static double GetScalarMultiplication(Vector vector1, Vector vector2)
         {
             double sum = 0;
+            double[] array1 = new double[vector1.Components.Length];
+            double[] array2 = new double[vector1.Components.Length];
 
-            if (vector1.Components.Length == vector2.Components.Length)
+            if (vector1.Components.Length < vector2.Components.Length)
             {
-                for (int i = 0; i < vector1.Components.Length; i++)
-                {
-                    sum += vector1.Components[i] * vector2.Components[i];
-                }
-                return sum;
+                array1 = new double[vector2.Components.Length];
+                array2 = new double[vector2.Components.Length];
+                Array.Copy(vector2.Components, array1, vector2.Components.Length);
+                Array.Copy(vector1.Components, array2, vector1.Components.Length);
             }
-            else if (vector1.Components.Length > vector2.Components.Length)
+            else if (vector1.Components.Length >= vector2.Components.Length)
             {
-                for (int i = 0; i < vector1.Components.Length; i++)
-                {
-                    if (i < vector2.Components.Length)
-                    {
-                        sum += vector1.Components[i] * vector2.Components[i];
-                    }
-                }
-
-                return sum;
+                array1 = new double[vector1.Components.Length];
+                array2 = new double[vector1.Components.Length];
+                Array.Copy(vector2.Components, array1, vector2.Components.Length);
+                Array.Copy(vector1.Components, array2, vector1.Components.Length);
             }
-            else
             {
-                for (int i = 0; i < vector2.Components.Length; i++)
+                for (int i = 0; i < array1.Length; i++)
                 {
-                    if (i < vector1.Components.Length)
-                    {
-                        sum += vector1.Components[i] * vector2.Components[i];
-                    }
+                    sum += array1[i] * array2[i];
                 }
 
                 return sum;
