@@ -19,16 +19,19 @@ namespace Vector
                 Console.WriteLine("Вектор v2:" + v2.ToString());
                 Console.WriteLine("Вектор v3:" + v4.ToString());
 
-                Vector summa = v2.GetSumVector(v1);
+                Vector summa = v1.GetSumVector(v2);
                 Console.WriteLine("Сумма векторов = " + summa.ToString());
+
+                Console.WriteLine("Вектор v1:" + v1.ToString());
+                Console.WriteLine("Вектор v2:" + v2.ToString());
 
                 Vector difference = v1.GetDifferenceVector(v2);
                 Console.WriteLine("Разность векторов = " + difference.ToString());
 
-                Vector multipliedScalar = v1.MultipliedScalar(5);
+                Vector multipliedScalar = v1.MultiplyScalar(5);
                 Console.WriteLine("Произведение вектора v1 на число 5 = " + multipliedScalar.ToString());
 
-                Vector revers = v1.Reversal();
+                Vector revers = v1.GetReversal();
                 Console.WriteLine("Разворот вектора v1 = " + revers.ToString());
 
                 double length = v1.GetLength();
@@ -61,7 +64,6 @@ namespace Vector
                 Vector v3 = new Vector(v2);
                 Console.WriteLine("Вектор v3, копия вектора v2 = " + v3.ToString());
 
-
                 Console.ReadKey();
             }
             catch (IndexOutOfRangeException)
@@ -69,5 +71,5 @@ namespace Vector
                 Console.WriteLine("Индекс выходит за пределы");
             }
         }
-}
+    }
 }

@@ -53,11 +53,32 @@ namespace Matrix
                 Console.WriteLine("Умножим matrix5 на 10 получим: " + matrix5.GetMultipliedScalar(10).ToString());
                 Console.WriteLine("matrix3: " + matrix3.ToString());
                 Console.WriteLine("Детерминант matrix3 = " + Matrix.GetDeterminant(matrix3).ToString());
+
+                double[] array5 = { 3, 3, 3 };
+                Vec v5 = new Vec(array5);
+                Console.WriteLine("matrix5: " + matrix5.ToString());
+                Console.WriteLine("вектор5 v5: " + v5.ToString());
+                Console.WriteLine("Умножим matrix5 на v5 получим:" + matrix5.GetMultiplicationByVector(v5).ToString());
+
+                Console.WriteLine("matrix5: " + matrix5.ToString());
+                Console.WriteLine("matrix3: " + matrix3.ToString());
+                Console.WriteLine("Сложим matrix5 и matrix3 получим:" + matrix5.AddMatrix(matrix3).ToString());
+                Console.WriteLine("Отнимем от matrix5 matrix3 получим:" + matrix5.TakeAwayMatrix(matrix3).ToString());
+                Console.WriteLine();
+                Console.WriteLine("matrix5: " + matrix5.ToString());
+                Console.WriteLine("matrix3: " + matrix3.ToString());
+                Console.WriteLine("Умножим matrix5 на matrix3 получим:" + Matrix.GetMultiplication(matrix5, matrix3).ToString());
             }
-            //catch
-            //{
-            //    Console.WriteLine("n и m должны быть > 0");
-            //}
+            catch (ArgumentException)
+            {
+                Console.WriteLine("n и m должны быть > 0");
+            }
+
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+
             finally
             {
                 Console.ReadKey();

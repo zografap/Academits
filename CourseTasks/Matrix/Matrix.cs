@@ -106,7 +106,7 @@ namespace Matrix
         {
             for (int i = 0; i < VectorArray.Length; i++)
             {
-                VectorArray[i] = VectorArray[i].MultipliedScalar(scalar);
+                VectorArray[i] = VectorArray[i].MultiplyScalar(scalar);
             }
 
             return this;
@@ -190,11 +190,100 @@ namespace Matrix
 
         public Vec GetMultiplicationByVector(Vec vector)
         {
-            if (VectorArray.Length != vector.GetLength())
-
+            if (VectorArray.Length != vector.GetSize())
             {
                 throw new ArgumentException("Количество строк матрицы должно быть равно длинне вектора ", nameof(VectorArray.Length));
             }
+
+            Vec vectorResult = new Vec(vector.GetSize());
+
+            for (int i = 0; i < VectorArray.Length; i++)
+            {
+                double sum = 0;
+
+                for (int j = 0; j < VectorArray[i].GetSize(); j++)
+                {
+                    sum += VectorArray[i].GetComponents(j) * vector.GetComponents(i);
+                }
+
+                vectorResult.SetComponents(i, sum);
+            }
+
+            return vectorResult;
         }
+
+        public Matrix AddMatrix(Matrix matrix)
+        {
+            if (GetDimensions()[0] == matrix.GetDimensions()[0] && GetDimensions()[1] == matrix.GetDimensions()[1])
+            {
+                Matrix matrixResult = new Matrix(matrix);
+
+                for (int i = 0; i < matrix.VectorArray.Length; i++)
+                {
+                    matrixResult.VectorArray[i] = VectorArray[i].GetSumVector(matrix.VectorArray[i]);
+                }
+
+                return matrixResult;
+            }
+
+            else
+            {
+                throw new Exception("Матрицы должны быть одинаковой размерности ");
+            }
+        }
+
+        public Matrix TakeAwayMatrix(Matrix matrix)
+        {
+            if (GetDimensions()[0] == matrix.GetDimensions()[0] && GetDimensions()[1] == matrix.GetDimensions()[1])
+            {
+                Matrix matrixResult = new Matrix(matrix);
+
+                for (int i = 0; i < matrix.VectorArray.Length; i++)
+                {
+                    matrixResult.VectorArray[i] = VectorArray[i].GetDifferenceVector(matrix.VectorArray[i]);
+                }
+
+                return matrixResult;
+            }
+
+            else
+            {
+                throw new Exception("Матрицы должны быть одинаковой размерности ");
+            }
+        }
+
+        public static Matrix GetSum(Matrix matrix1, Matrix matrix2)
+        {
+            return new Matrix(matrix1.AddMatrix(matrix2));
+        }
+
+        public static Matrix GetDifference(Matrix matrix1, Matrix matrix2)
+        {
+            return new Matrix(matrix1.TakeAwayMatrix(matrix2));
+        }
+
+        public static Matrix GetMultiplication(Matrix matrix1, Matrix matrix2)
+        {
+            if (matrix1.GetDimensions()[1] == matrix2.GetDimensions()[0])
+            {
+                Matrix matrixResult = new Matrix(matrix1.GetDimensions()[0], matrix2.GetDimensions()[1]);
+
+                for (int i = 0; i < matrixResult.VectorArray.Length; i++)
+                {
+                    for (int j = 0; j < matrixResult.VectorArray[i].GetSize(); j++)
+                    {
+                        matrixResult.VectorArray[i].SetComponents(j, Vec.GetScalarMultiplication(matrix1.VectorArray[i], matrix2.GetColumnVector(j)));
+                    }
+                }
+
+                return matrixResult;
+            }
+            else
+            {
+                throw new Exception("Число столбцов в первой матрице должно быть равно числу строк во вторй");
+            }
+
+        }
+
     }
 }
