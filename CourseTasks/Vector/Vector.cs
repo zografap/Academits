@@ -5,7 +5,7 @@ namespace Vector
 {
     public class Vector
     {
-        private double[] Components { get; set; }
+        public double[] Components { get; set; }
 
         public Vector(int n)
         {

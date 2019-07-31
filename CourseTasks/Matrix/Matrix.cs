@@ -267,14 +267,24 @@ namespace Matrix
             if (matrix1.GetDimensions()[1] == matrix2.GetDimensions()[0])
             {
                 Matrix matrixResult = new Matrix(matrix1.GetDimensions()[0], matrix2.GetDimensions()[1]);
+                Vec[] vectors = new Vec[matrixResult.GetDimensions()[0]];
+
+                for (int i = 0; i < vectors.Length; i++)
+                {
+                    vectors[i] = new Vec(matrix2.GetDimensions()[1]);
+                }
 
                 for (int i = 0; i < matrixResult.VectorArray.Length; i++)
                 {
                     for (int j = 0; j < matrixResult.VectorArray[i].GetSize(); j++)
                     {
-                        matrixResult.VectorArray[i].SetComponents(j, Vec.GetScalarMultiplication(matrix1.VectorArray[i], matrix2.GetColumnVector(j)));
+                        Vec columnVector = matrix2.GetColumnVector(j);
+                        double x = Vec.GetScalarMultiplication(matrix1.VectorArray[i], columnVector);
+                        vectors[i].Components[j] = x;
                     }
                 }
+
+                matrixResult = new Matrix(vectors);
 
                 return matrixResult;
             }
@@ -282,8 +292,6 @@ namespace Matrix
             {
                 throw new Exception("Число столбцов в первой матрице должно быть равно числу строк во вторй");
             }
-
         }
-
     }
 }

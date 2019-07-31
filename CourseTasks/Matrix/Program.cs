@@ -10,10 +10,10 @@ namespace Matrix
             try
             {
                 Matrix matrix1 = new Matrix(3, 5);
-                Console.WriteLine(matrix1.ToString());
+                Console.WriteLine("matrix1: " + matrix1.ToString());
 
                 Matrix matrix2 = new Matrix(matrix1);
-                Console.WriteLine(matrix2.ToString());
+                Console.WriteLine("matrix2: " + matrix2.ToString());
 
                 double[][] array1 = new double[3][];
                 array1[0] = new double[3] { 1, 1, 1 };
@@ -21,7 +21,7 @@ namespace Matrix
                 array1[2] = new double[3] { 3, 3, 3 };
 
                 Matrix matrix3 = new Matrix(array1);
-                Console.WriteLine(matrix3.ToString());
+                Console.WriteLine("matrix3: " + matrix3.ToString());
 
                 Vec[] vectors = new Vec[3];
                 double[] array2 = { 1, 1, 1 };
@@ -30,7 +30,7 @@ namespace Matrix
                 vectors[1] = v1;
                 vectors[2] = v1;
                 Matrix matrix4 = new Matrix(vectors);
-                Console.WriteLine(matrix4.ToString());
+                Console.WriteLine("matrix4: " + matrix4.ToString());
 
                 Console.WriteLine("Размеры матрицы matrix4 = " + matrix4.GetDimensions()[0] +
                     " на " + matrix4.GetDimensions()[1]);
