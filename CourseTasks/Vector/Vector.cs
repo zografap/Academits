@@ -5,7 +5,7 @@ namespace Vector
 {
     public class Vector
     {
-        public double[] Components { get; set; }
+        private double[] Components { get; set; }
 
         public Vector(int n)
         {
@@ -53,12 +53,7 @@ namespace Vector
             StringBuilder sb = new StringBuilder();
             sb.Append("{ ");
 
-            if (Components.Length == 0)
-            {
-                return "{ }";
-            }
-
-            foreach (int e in Components)
+            foreach (double e in Components)
             {
                 sb.Append(e);
                 sb.Append(", ");
@@ -70,7 +65,7 @@ namespace Vector
             return sb.ToString();
         }
 
-        public Vector GetSumVector(Vector vector)
+        public void Add(Vector vector)
         {
             double[] array1 = new double[Components.Length];
 
@@ -78,31 +73,30 @@ namespace Vector
             {
                 array1 = new double[vector.Components.Length];
                 Array.Copy(Components, array1, Components.Length);
-            }
-            else if (Components.Length >= vector.Components.Length)
-            {
-                array1 = new double[Components.Length];
-                Array.Copy(vector.Components, array1, vector.Components.Length);
-            }
 
-            for (int i = 0; i < array1.Length; i++)
-            {
-                if (Components.Length < vector.Components.Length)
+                for (int i = 0; i < array1.Length; i++)
                 {
                     array1[i] = array1[i] + vector.Components[i];
                 }
-                else
+            }
+            else
+            {
+                for (int i = 0; i < Components.Length; i++)
                 {
-                    array1[i] = array1[i] + Components[i];
+                    if (i < vector.Components.Length)
+                    {
+                        array1[i] = Components[i] + vector.Components[i];
+                    }
+                    else
+                    {
+                        array1[i] = Components[i];
+                    }
                 }
-
             }
             Components = array1;
-
-            return this;
         }
 
-        public Vector GetDifferenceVector(Vector vector)
+        public void Deduct(Vector vector)
         {
             double[] array1 = new double[Components.Length];
 
@@ -110,28 +104,27 @@ namespace Vector
             {
                 array1 = new double[vector.Components.Length];
                 Array.Copy(Components, array1, Components.Length);
-            }
-            else if (Components.Length >= vector.Components.Length)
-            {
-                array1 = new double[Components.Length];
-                Array.Copy(vector.Components, array1, vector.Components.Length);
-            }
 
-            for (int i = 0; i < array1.Length; i++)
-            {
-                if (Components.Length < vector.Components.Length)
+                for (int i = 0; i < array1.Length; i++)
                 {
                     array1[i] = array1[i] - vector.Components[i];
                 }
-                else
+            }
+            else
+            {
+                for (int i = 0; i < Components.Length; i++)
                 {
-                    array1[i] = Components[i] - array1[i];
+                    if (i < vector.Components.Length)
+                    {
+                        array1[i] = Components[i] - vector.Components[i];
+                    }
+                    else
+                    {
+                        array1[i] = Components[i];
+                    }
                 }
-
             }
             Components = array1;
-
-            return this;
         }
 
         public Vector MultiplyScalar(double scalar)
@@ -144,9 +137,9 @@ namespace Vector
             return this;
         }
 
-        public Vector GetReversal()
+        public void Reverse()
         {
-            return MultiplyScalar(-1);
+            MultiplyScalar(-1);
         }
 
         public double GetLength()
@@ -161,7 +154,7 @@ namespace Vector
             return Math.Sqrt(sum);
         }
 
-        public double GetComponents(int index)
+        public double GetComponent(int index)
         {
             if (index < 0 || index >= Components.Length)
             {
@@ -171,7 +164,7 @@ namespace Vector
             return Components[index];
         }
 
-        public void SetComponents(int index, double component)
+        public void SetComponent(int index, double component)
         {
             if (index < 0 || index >= Components.Length)
             {
@@ -206,7 +199,7 @@ namespace Vector
                 return true;
             }
 
-            if (ReferenceEquals(o, null) || o.GetType() != this.GetType())
+            if (ReferenceEquals(o, null) || o.GetType() != GetType())
             {
                 return false;
             }
@@ -231,31 +224,28 @@ namespace Vector
 
         public static Vector GetSum(Vector vector1, Vector vector2)
         {
-            return new Vector(vector1.GetSumVector(vector2));
+            Vector vectorSum = new Vector(vector1);
+            vectorSum.Add(vector2);
+
+            return vectorSum;
         }
 
         public static Vector GetDifference(Vector vector1, Vector vector2)
         {
-            return new Vector(vector1.GetDifferenceVector(vector2));
+            Vector vectorDifference = new Vector(vector1);
+            vectorDifference.Deduct(vector2);
+
+            return vectorDifference;
         }
 
         public static double GetScalarMultiplication(Vector vector1, Vector vector2)
         {
             double sum = 0;
+            int minimumLength = Math.Min(vector1.Components.Length, vector2.Components.Length);
 
-            if (vector1.Components.Length < vector2.Components.Length)
+            for (int i = 0; i < minimumLength; i++)
             {
-                for (int i = 0; i < vector1.Components.Length; i++)
-                {
-                    sum += vector1.Components[i] * vector2.Components[i];
-                }
-            }
-            else
-            {
-                for (int i = 0; i < vector2.Components.Length; i++)
-                {
-                    sum += vector1.Components[i] * vector2.Components[i];
-                }
+                sum += vector1.Components[i] * vector2.Components[i];
             }
 
             return sum;

@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matrix", "Matrix\Matrix.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArrayListHome", "ArrayListHome\ArrayListHome.csproj", "{961D122B-851D-48C1-AA38-337871C2DFEC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HashTable", "HashTable\HashTable.csproj", "{5581DD7C-9E4D-4345-9425-E30E4A4DEB73}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{961D122B-851D-48C1-AA38-337871C2DFEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{961D122B-851D-48C1-AA38-337871C2DFEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{961D122B-851D-48C1-AA38-337871C2DFEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5581DD7C-9E4D-4345-9425-E30E4A4DEB73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5581DD7C-9E4D-4345-9425-E30E4A4DEB73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5581DD7C-9E4D-4345-9425-E30E4A4DEB73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5581DD7C-9E4D-4345-9425-E30E4A4DEB73}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

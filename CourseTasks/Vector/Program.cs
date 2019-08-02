@@ -19,29 +19,29 @@ namespace Vector
                 Console.WriteLine("Вектор v2:" + v2.ToString());
                 Console.WriteLine("Вектор v3:" + v4.ToString());
 
-                Vector summa = v1.GetSumVector(v2);
-                Console.WriteLine("Сумма векторов = " + summa.ToString());
+                v1.Add(v2);
+                Console.WriteLine("Сумма векторов = " + v1.ToString());
 
                 Console.WriteLine("Вектор v1:" + v1.ToString());
                 Console.WriteLine("Вектор v2:" + v2.ToString());
 
-                Vector difference = v1.GetDifferenceVector(v2);
-                Console.WriteLine("Разность векторов = " + difference.ToString());
+                v1.Deduct(v2);
+                Console.WriteLine("Разность векторов = " + v1.ToString());
 
                 Vector multipliedScalar = v1.MultiplyScalar(5);
                 Console.WriteLine("Произведение вектора v1 на число 5 = " + multipliedScalar.ToString());
 
-                Vector revers = v1.GetReversal();
-                Console.WriteLine("Разворот вектора v1 = " + revers.ToString());
+                v1.Reverse();
+                Console.WriteLine("Разворот вектора v1 = " + v1.ToString());
 
                 double length = v1.GetLength();
                 Console.WriteLine("Длинна вектора v1 = " + length);
 
-                double component = v1.GetComponents(5);
+                double component = v1.GetComponent(5);
                 Console.WriteLine("Компонент вектора v1 по индексу 5 = " + component);
 
                 Console.WriteLine("Заменим компонент вектора v1 по индексу 4 на число 99");
-                v1.SetComponents(4, 99);
+                v1.SetComponent(4, 99);
                 Console.WriteLine(v1.ToString());
 
                 Console.WriteLine("Проверим на эквивалентность v1 и v2");
@@ -63,12 +63,16 @@ namespace Vector
 
                 Vector v3 = new Vector(v2);
                 Console.WriteLine("Вектор v3, копия вектора v2 = " + v3.ToString());
-
-                Console.ReadKey();
             }
-            catch (IndexOutOfRangeException)
+            
+            catch (Exception e)
             {
-                Console.WriteLine("Индекс выходит за пределы");
+                Console.WriteLine(e.ToString());
+            }
+
+            finally
+            {
+                Console.ReadKey();
             }
         }
     }

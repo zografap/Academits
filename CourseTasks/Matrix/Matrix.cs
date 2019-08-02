@@ -84,7 +84,7 @@ namespace Matrix
 
             for (int i = 0; i < VectorArray.Length; i++)
             {
-                columnVector.SetComponents(i, VectorArray[i].GetComponents(index));
+                columnVector.SetComponent(i, VectorArray[i].GetComponent(index));
             }
 
             return columnVector;
@@ -135,7 +135,7 @@ namespace Matrix
                         }
                         else
                         {
-                            matrix.VectorArray[i - dI].SetComponents(j - dJ, matrix.VectorArray[i].GetComponents(j));
+                            matrix.VectorArray[i - dI].SetComponent(j - dJ, matrix.VectorArray[i].GetComponent(j));
                         }
                     }
                 }
@@ -153,12 +153,12 @@ namespace Matrix
 
             if (matrix.VectorArray.Length == 1)
             {
-                return matrix.VectorArray[0].GetComponents(0);
+                return matrix.VectorArray[0].GetComponent(0);
             }
             else if (matrix.VectorArray.Length == 2)
             {
-                return matrix.VectorArray[0].GetComponents(0) * matrix.VectorArray[1].GetComponents(1)
-                    - matrix.VectorArray[1].GetComponents(0) * matrix.VectorArray[0].GetComponents(1);
+                return matrix.VectorArray[0].GetComponent(0) * matrix.VectorArray[1].GetComponent(1)
+                    - matrix.VectorArray[1].GetComponent(0) * matrix.VectorArray[0].GetComponent(1);
             }
 
             double determinant = 0.0;
@@ -166,7 +166,7 @@ namespace Matrix
             for (int i = 0; i < matrix.VectorArray.Length; i++)
             {
                 int coefficient = (i % 2 == 1) ? -1 : 1;
-                determinant += coefficient * matrix.VectorArray[0].GetComponents(i) * GetDeterminant(GetMinor(matrix, 0, i));
+                determinant += coefficient * matrix.VectorArray[0].GetComponent(i) * GetDeterminant(GetMinor(matrix, 0, i));
             }
 
             return determinant;
@@ -203,10 +203,10 @@ namespace Matrix
 
                 for (int j = 0; j < VectorArray[i].GetSize(); j++)
                 {
-                    sum += VectorArray[i].GetComponents(j) * vector.GetComponents(i);
+                    sum += VectorArray[i].GetComponent(j) * vector.GetComponent(i);
                 }
 
-                vectorResult.SetComponents(i, sum);
+                vectorResult.SetComponent(i, sum);
             }
 
             return vectorResult;
@@ -220,7 +220,7 @@ namespace Matrix
 
                 for (int i = 0; i < matrix.VectorArray.Length; i++)
                 {
-                    matrixResult.VectorArray[i] = VectorArray[i].GetSumVector(matrix.VectorArray[i]);
+                    VectorArray[i].Add(matrix.VectorArray[i]);
                 }
 
                 return matrixResult;
@@ -240,7 +240,8 @@ namespace Matrix
 
                 for (int i = 0; i < matrix.VectorArray.Length; i++)
                 {
-                    matrixResult.VectorArray[i] = VectorArray[i].GetDifferenceVector(matrix.VectorArray[i]);
+                    VectorArray[i].Deduct(matrix.VectorArray[i]);
+                    matrixResult.VectorArray[i] = VectorArray[i];
                 }
 
                 return matrixResult;
@@ -280,7 +281,7 @@ namespace Matrix
                     {
                         Vec columnVector = matrix2.GetColumnVector(j);
                         double x = Vec.GetScalarMultiplication(matrix1.VectorArray[i], columnVector);
-                        vectors[i].Components[j] = x;
+                        vectors[i].SetComponent(j, x);
                     }
                 }
 
