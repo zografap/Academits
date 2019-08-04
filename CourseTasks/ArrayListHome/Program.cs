@@ -9,88 +9,99 @@ namespace ArrayListHome
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Прочитаем в список все строки из файла");
-            List<string> lines = File.ReadAllLines("C:\\Users\\хп\\source\\repos\\Academits1\\CourseTasks\\ArrayListHome\\TextFile1.txt").ToList<string>();
-            Console.WriteLine("Получим: ");
-            Console.Write("{ ");
-
-            foreach (string s in lines)
+            try
             {
-                Console.Write(s + ", ");
-            }
+                List<string> lines = new List<string> { };
+                Console.WriteLine("Прочитаем в список все строки из файла");
 
-            Console.Write("}");
-
-            Console.WriteLine();
-
-            List<int> list1 = new List<int> { 1, 2, 3, 4, 5, 5, 77, 10, 20 };
-            Console.Write("Список list1: { ");
-
-            foreach (int n in list1)
-            {
-                Console.Write(n + ", ");
-            }
-
-            Console.Write("}");
-
-            Console.WriteLine("Удалим четные числа из списка");
-
-            for (int i = 0; i < list1.Count; i++)
-            {
-                if (list1[i] % 2 == 0)
+                using (StreamReader reader = new StreamReader("C:\\Users\\хп\\source\\repos\\Academits1\\CourseTasks\\ArrayListHome\\TextFile1.txt"))
                 {
-                    list1.RemoveAt(i);
-                    i--;
+                    while (!reader.EndOfStream)
+                    {
+                        string line = reader.ReadLine();
+                        lines.Add(line);
+                    }
                 }
-            }
 
-            Console.Write("Получим: ");
-            Console.Write("{ ");
+                Console.WriteLine("Получим: ");
+                Console.Write("{ ");
 
-            foreach (int n in list1)
-            {
-                Console.Write(n + ", ");
-            }
-
-            Console.Write("}");
-
-            Console.WriteLine();
-            List<int> list2 = new List<int> { 1, 2, 3, 2, 5, 5, 7, 1, 5 };
-            Console.Write("Список list2: { ");
-
-            foreach (int n in list2)
-            {
-                Console.Write(n + ", ");
-            }
-
-            Console.Write("}");
-
-            Console.WriteLine();
-            Console.WriteLine("Создадим новый список без повторений");
-            List<int> list3 = new List<int>();
-
-            foreach (int n in list2)
-            {
-                if (list3.Contains(n))
+                foreach (string s in lines)
                 {
-                    continue;
+                    Console.Write(s + ", ");
                 }
-                else
+
+                Console.Write("}");
+                Console.WriteLine();
+
+                List<int> list1 = new List<int> { 1, 2, 3, 4, 5, 5, 77, 10, 20 };
+                Console.Write("Список list1: { ");
+
+                foreach (int n in list1)
                 {
-                    list3.Add(n);
+                    Console.Write(n + ", ");
                 }
+
+                Console.Write("}");
+
+                Console.WriteLine("Удалим четные числа из списка");
+
+                for (int i = 0; i < list1.Count; i++)
+                {
+                    if (list1[i] % 2 == 0)
+                    {
+                        list1.RemoveAt(i);
+                        i--;
+                    }
+                }
+
+                Console.Write("Получим: ");
+                Console.Write("{ ");
+
+                foreach (int n in list1)
+                {
+                    Console.Write(n + ", ");
+                }
+
+                Console.Write("}");
+
+                Console.WriteLine();
+                List<int> list2 = new List<int> { 1, 2, 3, 2, 5, 5, 7, 1, 5 };
+                Console.Write("Список list2: { ");
+
+                foreach (int n in list2)
+                {
+                    Console.Write(n + ", ");
+                }
+
+                Console.Write("}");
+
+                Console.WriteLine();
+                Console.WriteLine("Создадим новый список без повторений");
+                List<int> list3 = new List<int>();
+
+                foreach (int n in list2)
+                {
+                    if (!list3.Contains(n))
+                    {
+                        list3.Add(n);
+                    }
+                }
+
+                Console.Write("Список list3: { ");
+
+                foreach (int n in list3)
+                {
+                    Console.Write(n + ", ");
+                }
+
+                Console.Write("}");
+                Console.ReadKey();
             }
-
-            Console.Write("Список list3: { ");
-
-            foreach (int n in list3)
+            catch (Exception e)
             {
-                Console.Write(n + ", ");
+                Console.WriteLine(e.ToString());
             }
-
-            Console.Write("}");
-
-            Console.ReadKey();
         }
     }
 }
