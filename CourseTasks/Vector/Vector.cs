@@ -39,6 +39,11 @@ namespace Vector
                 throw new ArgumentException("n должно быть > 0", nameof(n));
             }
 
+            if (array.Length == 0)
+            {
+                throw new ArgumentException("длинна массива должна быть > 0", nameof(array.Length));
+            }
+
             Components = new double[n];
             Array.Copy(array, Components, array.Length);
         }
@@ -67,17 +72,23 @@ namespace Vector
 
         public void Add(Vector vector)
         {
-            double[] array1 = new double[Components.Length];
-
             if (Components.Length < vector.Components.Length)
             {
-                array1 = new double[vector.Components.Length];
-                Array.Copy(Components, array1, Components.Length);
+                double[] array = new double[vector.Components.Length];
 
-                for (int i = 0; i < array1.Length; i++)
+                for (int i = 0; i < array.Length; i++)
                 {
-                    array1[i] = array1[i] + vector.Components[i];
+                    if (i < Components.Length)
+                    {
+                        array[i] = Components[i] + vector.Components[i];
+                    }
+                    else
+                    {
+                        array[i] = vector.Components[i];
+                    }
                 }
+
+                Components = array;
             }
             else
             {
@@ -85,30 +96,31 @@ namespace Vector
                 {
                     if (i < vector.Components.Length)
                     {
-                        array1[i] = Components[i] + vector.Components[i];
-                    }
-                    else
-                    {
-                        array1[i] = Components[i];
+                        Components[i] = Components[i] + vector.Components[i];
                     }
                 }
             }
-            Components = array1;
         }
 
         public void Deduct(Vector vector)
         {
-            double[] array1 = new double[Components.Length];
-
             if (Components.Length < vector.Components.Length)
             {
-                array1 = new double[vector.Components.Length];
-                Array.Copy(Components, array1, Components.Length);
+                double[] array = new double[vector.Components.Length];
 
-                for (int i = 0; i < array1.Length; i++)
+                for (int i = 0; i < array.Length; i++)
                 {
-                    array1[i] = array1[i] - vector.Components[i];
+                    if (i < Components.Length)
+                    {
+                        array[i] = Components[i] - vector.Components[i];
+                    }
+                    else
+                    {
+                        array[i] = vector.Components[i];
+                    }
                 }
+
+                Components = array;
             }
             else
             {
@@ -116,15 +128,10 @@ namespace Vector
                 {
                     if (i < vector.Components.Length)
                     {
-                        array1[i] = Components[i] - vector.Components[i];
-                    }
-                    else
-                    {
-                        array1[i] = Components[i];
+                        Components[i] = Components[i] - vector.Components[i];
                     }
                 }
             }
-            Components = array1;
         }
 
         public Vector MultiplyScalar(double scalar)

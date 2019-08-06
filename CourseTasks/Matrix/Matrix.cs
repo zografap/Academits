@@ -72,7 +72,6 @@ namespace Matrix
             VectorArray[index] = new Vec(vector);
         }
 
-
         public Vec GetColumnVector(int index)
         {
             if (index < 0 || index > VectorArray[0].GetSize())
