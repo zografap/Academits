@@ -22,9 +22,10 @@ namespace ArrayListHome
                     }
                 }
             }
-            catch (Exception e)
+
+            catch (FileNotFoundException)
             {
-                Console.WriteLine(e.ToString());
+                Console.WriteLine("Ошибка при работе с файлом");
             }
 
             Console.WriteLine("Получим: ");
