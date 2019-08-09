@@ -39,13 +39,8 @@ namespace Vector
                 throw new ArgumentException("n должно быть > 0", nameof(n));
             }
 
-            if (array.Length == 0)
-            {
-                throw new ArgumentException("длинна массива должна быть > 0", nameof(array.Length));
-            }
-
             Components = new double[n];
-            Array.Copy(array, Components, array.Length);
+            Array.Copy(array, 0, Components, 0, Math.Min(n, array.Length));
         }
 
         public int GetSize()
@@ -75,29 +70,20 @@ namespace Vector
             if (Components.Length < vector.Components.Length)
             {
                 double[] array = new double[vector.Components.Length];
+                Array.Copy(Components, 0, array, 0, GetSize());
 
                 for (int i = 0; i < array.Length; i++)
                 {
-                    if (i < Components.Length)
-                    {
-                        array[i] = Components[i] + vector.Components[i];
-                    }
-                    else
-                    {
-                        array[i] = vector.Components[i];
-                    }
+                    array[i] = Components[i] + vector.Components[i];
                 }
 
                 Components = array;
             }
             else
             {
-                for (int i = 0; i < Components.Length; i++)
+                for (int i = 0; i < vector.Components.Length; i++)
                 {
-                    if (i < vector.Components.Length)
-                    {
-                        Components[i] = Components[i] + vector.Components[i];
-                    }
+                    Components[i] += vector.Components[i];
                 }
             }
         }
@@ -107,29 +93,20 @@ namespace Vector
             if (Components.Length < vector.Components.Length)
             {
                 double[] array = new double[vector.Components.Length];
+                Array.Copy(Components, 0, array, 0, GetSize());
 
                 for (int i = 0; i < array.Length; i++)
                 {
-                    if (i < Components.Length)
-                    {
-                        array[i] = Components[i] - vector.Components[i];
-                    }
-                    else
-                    {
-                        array[i] = vector.Components[i];
-                    }
+                    array[i] = Components[i] - vector.Components[i];
                 }
 
                 Components = array;
             }
             else
             {
-                for (int i = 0; i < Components.Length; i++)
+                for (int i = 0; i < vector.Components.Length; i++)
                 {
-                    if (i < vector.Components.Length)
-                    {
-                        Components[i] = Components[i] - vector.Components[i];
-                    }
+                    Components[i] -= vector.Components[i];
                 }
             }
         }

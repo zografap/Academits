@@ -8,8 +8,8 @@ namespace List
 {
     class ListItem<T>
     {
-        private T Data;
-        private ListItem<T> Next;
+        public T Data { get; set; }
+        public ListItem<T> Next { get; set; }
 
         public ListItem(T data)
         {
