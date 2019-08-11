@@ -1,38 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace List
 {
     class SinglyLinkedList<T>
     {
-        private ListItem<T> head;
-        private int count;
+        private ListItem<T> Head { get; set; }
+        private int Count { get; set; }
 
         public SinglyLinkedList() { }
 
         public int GetSize()
         {
-            return count;
+            return Count;
         }
 
         public ListItem<T> GetValueFirstElement()
         {
-            return head;
+            return Head;
         }
 
         public ListItem<T> GetValueByIndex(int index)
         {
-            if (index > count)
+            if (index > Count)
             {
                 throw new ArgumentException("index выходит за границы списка");
             }
 
             int n = 0;
 
-            for (ListItem<T> p = head; p != null; p = p.Next)
+            for (ListItem<T> p = Head; p != null; p = p.Next)
             {
                 if (n == index)
                 {
@@ -43,9 +40,36 @@ namespace List
             return null;
         }
 
+        public ListItem<T> ChangeElementByIndex(int index, T data)
+        {
+            ListItem<T> p = GetValueByIndex(index);
+            p.Data = data;
+            return null;
+        }
+
         public void InsertElementToBeginning(T Data)
         {
+            ListItem<T> listItem = new ListItem<T>(Data);
+            listItem.Next = Head;
+            Head = listItem;
+            Count++;
+        }
 
-        } 
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("{ ");
+
+            for (ListItem<T> p = Head; p != null; p = p.Next)
+            {
+                sb.Append(p.Data);
+                sb.Append(", ");
+            }
+
+            sb.Remove(sb.Length - 2, 2);
+            sb.Append(" }");
+
+            return sb.ToString();
+        }
     }
 }

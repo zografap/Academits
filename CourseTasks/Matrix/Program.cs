@@ -32,11 +32,11 @@ namespace Matrix
                 Matrix matrix4 = new Matrix(vectors);
                 Console.WriteLine("matrix4: " + matrix4.ToString());
 
-                Console.WriteLine("Размеры матрицы matrix4 = " + matrix4.GetDimensions()[0] +
-                    " на " + matrix4.GetDimensions()[1]);
+                Console.WriteLine("Размеры матрицы matrix4 = " + matrix4.GetNumberOfRows() +
+                    " на " + matrix4.GetNumberOfСolumns());
 
-                Console.WriteLine("Размеры матрицы matrix1 = " + matrix1.GetDimensions()[0] +
-                    " на " + matrix1.GetDimensions()[1]);
+                Console.WriteLine("Размеры матрицы matrix1 = " + matrix1.GetNumberOfRows() +
+                    " на " + matrix1.GetNumberOfСolumns());
 
                 Console.WriteLine("Получим вектор строку matrix3 по индексу 1 : " + matrix3.GetRowVector(1).ToString());
 
@@ -69,9 +69,9 @@ namespace Matrix
                 Console.WriteLine("matrix3: " + matrix3.ToString());
                 Console.WriteLine("Умножим matrix5 на matrix3 получим:" + Matrix.GetMultiplication(matrix5, matrix3).ToString());
             }
-            catch (ArgumentException)
+            catch (IndexOutOfRangeException e)
             {
-                Console.WriteLine("n и m должны быть > 0");
+                Console.WriteLine(e.ToString());
             }
 
             catch (Exception e)
