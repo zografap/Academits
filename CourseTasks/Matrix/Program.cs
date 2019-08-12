@@ -73,12 +73,14 @@ namespace Matrix
             {
                 Console.WriteLine(e.ToString());
             }
-
+            catch (ArgumentException e)
+            {
+                Console.WriteLine(e.ToString());
+            }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
             }
-
             finally
             {
                 Console.ReadKey();

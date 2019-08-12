@@ -126,14 +126,14 @@ namespace Matrix
                 throw new IndexOutOfRangeException("index должен быть от 0 до " + Vectors.Length);
             }
 
-            return Vectors[index];
+            return new Vec (Vectors[index]);
         }
 
         public void SetRow(int index, Vec vector)
         {
-            if (vector.GetSize() != Vectors.Length)
+            if (vector.GetSize() != Vectors[index].GetSize())
             {
-                throw new ArgumentOutOfRangeException("размер вектора должен быть " + Vectors.Length, nameof(vector));
+                throw new ArgumentOutOfRangeException("размер вектора должен быть " + Vectors[index].GetSize(), nameof(vector));
             }
 
             Vectors[index] = new Vec(vector);
@@ -322,33 +322,48 @@ namespace Matrix
 
         public static Matrix GetSum(Matrix matrix1, Matrix matrix2)
         {
-            Matrix matrixSum = new Matrix(matrix1);
+            if (matrix1.GetNumberOfRows() == matrix2.GetNumberOfRows() && matrix1.GetNumberOfСolumns() == matrix2.GetNumberOfСolumns())
 
-            return new Matrix(matrixSum.AddMatrix(matrix2));
+            {
+                Matrix matrixSum = new Matrix(matrix1);
+
+                return new Matrix(matrixSum.AddMatrix(matrix2));
+            }
+            else
+            {
+                throw new Exception("Матрицы должны быть одинаковой размерности ");
+            }
         }
 
         public static Matrix GetDifference(Matrix matrix1, Matrix matrix2)
         {
-            Matrix matrixDifference = new Matrix(matrix1);
+            if (matrix1.GetNumberOfRows() == matrix2.GetNumberOfRows() && matrix1.GetNumberOfСolumns() == matrix2.GetNumberOfСolumns())
 
-            return new Matrix(matrixDifference.DeductMatrix(matrix2));
+            {
+                Matrix matrixDifference = new Matrix(matrix1);
+
+                return new Matrix(matrixDifference.DeductMatrix(matrix2));
+            }
+            else
+            {
+                throw new Exception("Матрицы должны быть одинаковой размерности ");
+            }
         }
 
         public static Matrix GetMultiplication(Matrix matrix1, Matrix matrix2)
         {
             if (matrix1.GetNumberOfСolumns() == matrix2.GetNumberOfRows())
             {
-                Matrix matrixResult = new Matrix(matrix1.GetNumberOfRows(), matrix2.GetNumberOfСolumns());
-                Vec[] vectors = new Vec[matrixResult.GetNumberOfRows()];
+                Vec[] vectors = new Vec[matrix2.GetNumberOfRows()];
 
                 for (int i = 0; i < vectors.Length; i++)
                 {
                     vectors[i] = new Vec(matrix2.GetNumberOfСolumns());
                 }
 
-                for (int i = 0; i < matrixResult.Vectors.Length; i++)
+                for (int i = 0; i < matrix2.GetNumberOfRows(); i++)
                 {
-                    for (int j = 0; j < matrixResult.Vectors[i].GetSize(); j++)
+                    for (int j = 0; j < matrix1.GetNumberOfСolumns(); j++)
                     {
                         Vec columnVector = matrix2.GetColumn(j);
                         double x = Vec.GetScalarMultiplication(matrix1.Vectors[i], columnVector);
@@ -356,13 +371,11 @@ namespace Matrix
                     }
                 }
 
-                matrixResult = new Matrix(vectors);
-
-                return matrixResult;
+                return new Matrix(vectors);
             }
             else
             {
-                throw new Exception("Число столбцов в первой матрице должно быть равно числу строк во вторй");
+                throw new ArgumentException("Число столбцов в первой матрице должно быть равно числу строк во вторй");
             }
         }
     }
