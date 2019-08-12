@@ -119,7 +119,7 @@ namespace Matrix
             return Vectors[0].GetSize();
         }
 
-        public Vec GetRowVector(int index)
+        public Vec GetRow(int index)
         {
             if (index < 0 || index > Vectors.Length)
             {
@@ -129,10 +129,9 @@ namespace Matrix
             return Vectors[index];
         }
 
-        public void SetRowVector(int index, Vec vector)
+        public void SetRow(int index, Vec vector)
         {
             if (vector.GetSize() != Vectors.Length)
-
             {
                 throw new ArgumentOutOfRangeException("размер вектора должен быть " + Vectors.Length, nameof(vector));
             }
@@ -140,10 +139,9 @@ namespace Matrix
             Vectors[index] = new Vec(vector);
         }
 
-        public Vec GetColumnVector(int index)
+        public Vec GetColumn(int index)
         {
             if (index < 0 || index > Vectors[0].GetSize())
-
             {
                 throw new IndexOutOfRangeException("index должен быть от 0 до " + Vectors[0].GetSize());
             }
@@ -159,35 +157,38 @@ namespace Matrix
 
         public Matrix GetTranspose()
         {
-            Matrix result = new Matrix(Vectors[0].GetSize(), Vectors.Length);
+            Vec[] vectors = new Vec[GetNumberOfСolumns()];
 
             for (int i = 0; i < Vectors[0].GetSize(); i++)
             {
-                result.Vectors[i] = GetColumnVector(i);
+                vectors[i] = GetColumn(i);
             }
 
-            return result;
+            Vectors = vectors;
+
+            return this;
         }
 
         public Matrix GetMultipliedScalar(double scalar)
         {
-            for (int i = 0; i < Vectors.Length; i++)
+            foreach (Vec e in Vectors)
             {
-                Vectors[i] = Vectors[i].MultiplyScalar(scalar);
+                e.MultiplyScalar(scalar);
             }
 
             return this;
         }
 
-        public static Matrix GetMinor(Matrix matrix, int row, int column)
+        private static Matrix GetMinor(Matrix matrix, int row, int column)
         {
             int minorLength = matrix.Vectors.Length - 1;
             Matrix minor = new Matrix(minorLength, minorLength);
             int dI = 0;
-            int dJ;
+
             for (int i = 0; i <= minorLength; i++)
             {
-                dJ = 0;
+                int dJ = 0;
+
                 for (int j = 0; j <= minorLength; j++)
                 {
                     if (i == row)
@@ -210,30 +211,30 @@ namespace Matrix
             return minor;
         }
 
-        public static double GetDeterminant(Matrix matrix)
+        public double GetDeterminant()
         {
-            if (matrix.Vectors.Length != matrix.Vectors[0].GetSize())
-
+            if (Vectors.Length != Vectors[0].GetSize())
             {
-                throw new ArgumentException("Матрица должна быть квадратной!", nameof(matrix.Vectors.Length));
+                throw new ArgumentException("Матрица должна быть квадратной!");
             }
 
-            if (matrix.Vectors.Length == 1)
+            if (Vectors.Length == 1)
             {
-                return matrix.Vectors[0].GetComponent(0);
+                return Vectors[0].GetComponent(0);
             }
-            else if (matrix.Vectors.Length == 2)
+
+            if (Vectors.Length == 2)
             {
-                return matrix.Vectors[0].GetComponent(0) * matrix.Vectors[1].GetComponent(1)
-                    - matrix.Vectors[1].GetComponent(0) * matrix.Vectors[0].GetComponent(1);
+                return Vectors[0].GetComponent(0) * Vectors[1].GetComponent(1)
+                    - Vectors[1].GetComponent(0) * Vectors[0].GetComponent(1);
             }
 
             double determinant = 0.0;
 
-            for (int i = 0; i < matrix.Vectors.Length; i++)
+            for (int i = 0; i < Vectors.Length; i++)
             {
                 int coefficient = (i % 2 == 1) ? -1 : 1;
-                determinant += coefficient * matrix.Vectors[0].GetComponent(i) * GetDeterminant(GetMinor(matrix, 0, i));
+                determinant += coefficient * Vectors[0].GetComponent(i) * GetMinor(this, 0, i).GetDeterminant();
             }
 
             return determinant;
@@ -246,7 +247,8 @@ namespace Matrix
 
             foreach (Vec e in Vectors)
             {
-                sb.Append(e + ", ");
+                sb.Append(e);
+                sb.Append(", ");
             }
 
             sb.Remove(sb.Length - 2, 2);
@@ -255,7 +257,7 @@ namespace Matrix
             return sb.ToString();
         }
 
-        public Vec GetMultiplicationByVector(Vec vector)
+        public Vec MultiplyByVector(Vec vector)
         {
             if (Vectors.Length != vector.GetSize())
             {
@@ -292,14 +294,13 @@ namespace Matrix
 
                 return matrixResult;
             }
-
             else
             {
                 throw new Exception("Матрицы должны быть одинаковой размерности ");
             }
         }
 
-        public Matrix TakeAwayMatrix(Matrix matrix)
+        public Matrix DeductMatrix(Matrix matrix)
         {
             if (GetNumberOfRows() == matrix.GetNumberOfRows() && GetNumberOfСolumns() == matrix.GetNumberOfСolumns())
             {
@@ -313,7 +314,6 @@ namespace Matrix
 
                 return matrixResult;
             }
-
             else
             {
                 throw new Exception("Матрицы должны быть одинаковой размерности ");
@@ -322,12 +322,16 @@ namespace Matrix
 
         public static Matrix GetSum(Matrix matrix1, Matrix matrix2)
         {
-            return new Matrix(matrix1.AddMatrix(matrix2));
+            Matrix matrixSum = new Matrix(matrix1);
+
+            return new Matrix(matrixSum.AddMatrix(matrix2));
         }
 
         public static Matrix GetDifference(Matrix matrix1, Matrix matrix2)
         {
-            return new Matrix(matrix1.TakeAwayMatrix(matrix2));
+            Matrix matrixDifference = new Matrix(matrix1);
+
+            return new Matrix(matrixDifference.DeductMatrix(matrix2));
         }
 
         public static Matrix GetMultiplication(Matrix matrix1, Matrix matrix2)
@@ -346,7 +350,7 @@ namespace Matrix
                 {
                     for (int j = 0; j < matrixResult.Vectors[i].GetSize(); j++)
                     {
-                        Vec columnVector = matrix2.GetColumnVector(j);
+                        Vec columnVector = matrix2.GetColumn(j);
                         double x = Vec.GetScalarMultiplication(matrix1.Vectors[i], columnVector);
                         vectors[i].SetComponent(j, x);
                     }

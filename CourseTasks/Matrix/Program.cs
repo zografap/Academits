@@ -38,13 +38,13 @@ namespace Matrix
                 Console.WriteLine("Размеры матрицы matrix1 = " + matrix1.GetNumberOfRows() +
                     " на " + matrix1.GetNumberOfСolumns());
 
-                Console.WriteLine("Получим вектор строку matrix3 по индексу 1 : " + matrix3.GetRowVector(1).ToString());
+                Console.WriteLine("Получим вектор строку matrix3 по индексу 1 : " + matrix3.GetRow(1).ToString());
 
-                matrix3.SetRowVector(1, v1);
+                matrix3.SetRow(1, v1);
                 Console.WriteLine("Установим в matrix3 строку с индексом 1 равную вектору v1: " + matrix3.ToString());
 
                 Matrix matrix5 = new Matrix(array1);
-                Console.WriteLine("Получим вектор столбец с индексом 1 из matrix5: " + matrix5.GetColumnVector(1).ToString());
+                Console.WriteLine("Получим вектор столбец с индексом 1 из matrix5: " + matrix5.GetColumn(1).ToString());
 
                 Console.WriteLine("Транспонируем matrix5 получим: " + matrix5.GetTranspose().ToString());
 
@@ -52,18 +52,18 @@ namespace Matrix
 
                 Console.WriteLine("Умножим matrix5 на 10 получим: " + matrix5.GetMultipliedScalar(10).ToString());
                 Console.WriteLine("matrix3: " + matrix3.ToString());
-                Console.WriteLine("Детерминант matrix3 = " + Matrix.GetDeterminant(matrix3).ToString());
+                Console.WriteLine("Детерминант matrix3 = " + matrix3.GetDeterminant().ToString());
 
                 double[] array5 = { 3, 3, 3 };
                 Vec v5 = new Vec(array5);
                 Console.WriteLine("matrix5: " + matrix5.ToString());
                 Console.WriteLine("вектор5 v5: " + v5.ToString());
-                Console.WriteLine("Умножим matrix5 на v5 получим:" + matrix5.GetMultiplicationByVector(v5).ToString());
+                Console.WriteLine("Умножим matrix5 на v5 получим:" + matrix5.MultiplyByVector(v5).ToString());
 
                 Console.WriteLine("matrix5: " + matrix5.ToString());
                 Console.WriteLine("matrix3: " + matrix3.ToString());
                 Console.WriteLine("Сложим matrix5 и matrix3 получим:" + matrix5.AddMatrix(matrix3).ToString());
-                Console.WriteLine("Отнимем от matrix5 matrix3 получим:" + matrix5.TakeAwayMatrix(matrix3).ToString());
+                Console.WriteLine("Отнимем от matrix5 matrix3 получим:" + matrix5.DeductMatrix(matrix3).ToString());
                 Console.WriteLine();
                 Console.WriteLine("matrix5: " + matrix5.ToString());
                 Console.WriteLine("matrix3: " + matrix3.ToString());

@@ -15,24 +15,24 @@ namespace Vector
                 Vector v2 = new Vector(array2);
                 Vector v4 = new Vector(10, array1);
 
-                Console.WriteLine("Вектор v1:" + v1.ToString());
-                Console.WriteLine("Вектор v2:" + v2.ToString());
-                Console.WriteLine("Вектор v3:" + v4.ToString());
+                Console.WriteLine("Вектор v1:" + v1);
+                Console.WriteLine("Вектор v2:" + v2);
+                Console.WriteLine("Вектор v3:" + v4);
 
                 v1.Add(v2);
-                Console.WriteLine("Сумма векторов = " + v1.ToString());
+                Console.WriteLine("Сумма векторов = " + v1);
 
-                Console.WriteLine("Вектор v1:" + v1.ToString());
-                Console.WriteLine("Вектор v2:" + v2.ToString());
+                Console.WriteLine("Вектор v1:" + v1);
+                Console.WriteLine("Вектор v2:" + v2);
 
                 v1.Deduct(v2);
-                Console.WriteLine("Разность векторов = " + v1.ToString());
+                Console.WriteLine("Разность векторов = " + v1);
 
                 Vector multipliedScalar = v1.MultiplyScalar(5);
-                Console.WriteLine("Произведение вектора v1 на число 5 = " + multipliedScalar.ToString());
+                Console.WriteLine("Произведение вектора v1 на число 5 = " + multipliedScalar);
 
                 v1.Reverse();
-                Console.WriteLine("Разворот вектора v1 = " + v1.ToString());
+                Console.WriteLine("Разворот вектора v1 = " + v1);
 
                 double length = v1.GetLength();
                 Console.WriteLine("Длинна вектора v1 = " + length);
@@ -42,7 +42,7 @@ namespace Vector
 
                 Console.WriteLine("Заменим компонент вектора v1 по индексу 4 на число 99");
                 v1.SetComponent(4, 99);
-                Console.WriteLine(v1.ToString());
+                Console.WriteLine(v1);
 
                 Console.WriteLine("Проверим на эквивалентность v1 и v2");
                 bool equals = v1.Equals(v2);
@@ -53,21 +53,21 @@ namespace Vector
                 Console.WriteLine("hashCod вектора v2  = " + v2.GetHashCode());
 
                 Vector summa2 = Vector.GetSum(v1, v2);
-                Console.WriteLine("Сумма векторов = " + summa2.ToString());
+                Console.WriteLine("Сумма векторов = " + summa2);
 
                 Vector difference2 = Vector.GetDifference(v1, v2);
-                Console.WriteLine("Разность векторов = " + difference2.ToString());
+                Console.WriteLine("Разность векторов = " + difference2);
 
                 double scalarMultiplication = Vector.GetScalarMultiplication(v1, v2);
                 Console.WriteLine("Скалярное произведение векторов = " + scalarMultiplication);
 
                 Vector v3 = new Vector(v2);
-                Console.WriteLine("Вектор v3, копия вектора v2 = " + v3.ToString());
+                Console.WriteLine("Вектор v3, копия вектора v2 = " + v3);
             }
             
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                Console.WriteLine(e);
             }
 
             finally

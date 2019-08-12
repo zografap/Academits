@@ -70,13 +70,18 @@ namespace Vector
             if (Components.Length < vector.Components.Length)
             {
                 double[] array = new double[vector.Components.Length];
-                Array.Copy(Components, 0, array, 0, GetSize());
 
-                for (int i = 0; i < array.Length; i++)
+                for (int i = 0; i < vector.Components.Length; i++)
                 {
-                    array[i] = Components[i] + vector.Components[i];
+                    if (i < Components.Length)
+                    {
+                        array[i] = Components[i] + vector.Components[i];
+                    }
+                    else
+                    {
+                        array[i] = vector.Components[i];
+                    }
                 }
-
                 Components = array;
             }
             else
@@ -93,13 +98,18 @@ namespace Vector
             if (Components.Length < vector.Components.Length)
             {
                 double[] array = new double[vector.Components.Length];
-                Array.Copy(Components, 0, array, 0, GetSize());
 
-                for (int i = 0; i < array.Length; i++)
+                for (int i = 0; i < vector.Components.Length; i++)
                 {
-                    array[i] = Components[i] - vector.Components[i];
+                    if (i < Components.Length)
+                    {
+                        array[i] = Components[i] - vector.Components[i];
+                    }
+                    else
+                    {
+                        array[i] = -1 * vector.Components[i];
+                    }
                 }
-
                 Components = array;
             }
             else
