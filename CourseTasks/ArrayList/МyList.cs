@@ -9,17 +9,17 @@ namespace ArrayList
     {
         private static int Сapacity = 10;
 
-        private ListItem<T>[] Contents = new ListItem<T>[Сapacity];
+        private T[] Contents = new T[Сapacity];
 
         public T this[int index]
         {
             get
             {
-                return Contents[index].Data;
+                return Contents[index];
             }
             set
             {
-                Contents[index].Data = value;
+                Contents[index] = value;
             }
         }
 
@@ -27,7 +27,7 @@ namespace ArrayList
 
         public МyList(int capacity)
         {
-            Contents = new ListItem<T>[Сapacity];
+            Contents = new T[Сapacity];
         }
 
         public void EnsureCapacity(int capacity)
@@ -38,7 +38,7 @@ namespace ArrayList
             }
             else
             {
-                ListItem<T>[] ContentsTmp = new ListItem<T>[capacity];
+                T[] ContentsTmp = new T[capacity];
                 Array.Copy(Contents, 0, ContentsTmp, 0, Contents.Length);
                 Contents = ContentsTmp;
             }
@@ -46,7 +46,7 @@ namespace ArrayList
 
         public void TrimToSize()
         {
-            ListItem<T>[] ContentsTmp = new ListItem<T>[Count];
+            T[] ContentsTmp = new T[Count];
             Array.Copy(Contents, 0, ContentsTmp, 0, Count);
             Contents = ContentsTmp;
         }
@@ -61,20 +61,18 @@ namespace ArrayList
 
         public void Add(T data)
         {
-            ListItem<T> listItem = new ListItem<T>(data);
-
             if (Count < Contents.Length)
             {
 
-                Contents[Count] = listItem;
+                Contents[Count] = data;
                 Count++;
             }
             else
             {
-                ListItem<T>[] ContentsTmp = new ListItem<T>[Сapacity * 2];
+                T[] ContentsTmp = new T[Сapacity * 2];
                 Array.Copy(Contents, 0, ContentsTmp, 0, Contents.Length);
                 Contents = ContentsTmp;
-                Contents[Count] = listItem;
+                Contents[Count] = data;
                 Count++;
             }
         }
@@ -118,7 +116,7 @@ namespace ArrayList
             int itemIndex = -1;
             for (int i = 0; i < Count; i++)
             {
-                if (Contents[i].Data.Equals(data))
+                if (Contents[i].Equals(data))
                 {
                     itemIndex = i;
                     break;
@@ -132,24 +130,37 @@ namespace ArrayList
             if ((Count + 1 <= Contents.Length) && (index < Count) && (index >= 0))
             {
                 Count++;
+                T tmp = Contents[index];
 
                 for (int i = Count - 1; i > index; i--)
                 {
                     Contents[i] = Contents[i - 1];
                 }
 
-                Contents[index].Data = data;
+                Contents[index] = data;
             }
         }
 
         public bool Remove(T item)
         {
-            throw new NotImplementedException();
+            if (Contains(item))
+            {
+                RemoveAt(IndexOf(item));
+                return true;
+            }
+            return false;
         }
 
         public void RemoveAt(int index)
         {
-            throw new NotImplementedException();
+            if ((index >= 0) && (index < Count))
+            {
+                for (int i = index; i < Count - 1; i++)
+                {
+                    Contents[i] = Contents[i + 1];
+                }
+                Count--;
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -164,7 +175,7 @@ namespace ArrayList
 
             for (int i = 0; i < Count; i++)
             {
-                sb.Append(Contents[i].Data);
+                sb.Append(Contents[i]);
                 sb.Append(", ");
             }
 

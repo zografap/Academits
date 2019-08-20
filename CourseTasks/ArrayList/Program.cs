@@ -25,6 +25,12 @@ namespace ArrayList
             myList.Insert(5,"тополь");
             Console.WriteLine("Вставим тополь по индексу 5 получим: " + myList);
 
+            myList.Remove("тополь");
+            Console.WriteLine("Удалим тополь получим: " + myList);
+
+            myList.RemoveAt("тополь");
+            Console.WriteLine("Удалим тополь получим: " + myList);
+
             Console.ReadKey();
         }
     }
