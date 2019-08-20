@@ -15,10 +15,7 @@ namespace Matrix
                 Matrix matrix2 = new Matrix(matrix1);
                 Console.WriteLine("matrix2: " + matrix2.ToString());
 
-                double[][] array1 = new double[3][];
-                array1[0] = new double[3] { 1, 1, 1 };
-                array1[1] = new double[3] { 2, 2, 2 };
-                array1[2] = new double[3] { 3, 3, 3 };
+                double[,] array1 = new double[3, 3] { { 1, 1, 1 }, { 2, 2, 2 }, { 3, 3, 3 } };
 
                 Matrix matrix3 = new Matrix(array1);
                 Console.WriteLine("matrix3: " + matrix3.ToString());
@@ -32,11 +29,11 @@ namespace Matrix
                 Matrix matrix4 = new Matrix(vectors);
                 Console.WriteLine("matrix4: " + matrix4.ToString());
 
-                Console.WriteLine("Размеры матрицы matrix4 = " + matrix4.GetNumberOfRows() +
-                    " на " + matrix4.GetNumberOfСolumns());
+                Console.WriteLine("Размеры матрицы matrix4 = " + matrix4.GetRowsCount() +
+                    " на " + matrix4.GetСolumnsCount());
 
-                Console.WriteLine("Размеры матрицы matrix1 = " + matrix1.GetNumberOfRows() +
-                    " на " + matrix1.GetNumberOfСolumns());
+                Console.WriteLine("Размеры матрицы matrix1 = " + matrix1.GetRowsCount() +
+                    " на " + matrix1.GetСolumnsCount());
 
                 Console.WriteLine("Получим вектор строку matrix3 по индексу 1 : " + matrix3.GetRow(1).ToString());
 
@@ -46,11 +43,11 @@ namespace Matrix
                 Matrix matrix5 = new Matrix(array1);
                 Console.WriteLine("Получим вектор столбец с индексом 1 из matrix5: " + matrix5.GetColumn(1).ToString());
 
-                Console.WriteLine("Транспонируем matrix5 получим: " + matrix5.GetTranspose().ToString());
+                Console.WriteLine("Транспонируем matrix5 получим: " + matrix5.Transpose().ToString());
 
                 Console.WriteLine("matrix5: " + matrix5.ToString());
 
-                Console.WriteLine("Умножим matrix5 на 10 получим: " + matrix5.GetMultipliedScalar(10).ToString());
+                Console.WriteLine("Умножим matrix5 на 10 получим: " + matrix5.MultiplyByScalar(10).ToString());
                 Console.WriteLine("matrix3: " + matrix3.ToString());
                 Console.WriteLine("Детерминант matrix3 = " + matrix3.GetDeterminant().ToString());
 
