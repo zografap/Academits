@@ -242,20 +242,20 @@ namespace Matrix
 
         public Vec MultiplyByVector(Vec vector)
         {
-            if (Rows.Length != vector.GetSize())
+            if (GetСolumnsCount() != vector.GetSize())
             {
-                throw new ArgumentException("Количество строк матрицы должно быть равно длинне вектора ", nameof(Rows.Length));
+                throw new ArgumentException("Количество столбцов матрицы должно быть равно длинне вектора ");
             }
 
             Vec vectorResult = new Vec(vector.GetSize());
 
-            for (int i = 0; i < Rows.Length; i++)
+            for (int i = 0; i < vector.GetSize(); i++)
             {
                 double sum = 0;
 
-                for (int j = 0; j < Rows[i].GetSize(); j++)
+                for (int j = 0; j < Rows.Length; j++)
                 {
-                    sum += Rows[i].GetComponent(j) * vector.GetComponent(i);
+                    sum += Rows[i].GetComponent(j) * vector.GetComponent(j);
                 }
 
                 vectorResult.SetComponent(i, sum);
@@ -323,19 +323,19 @@ namespace Matrix
         {
             if (matrix1.GetСolumnsCount() != matrix2.GetRowsCount())
             {
-                throw new ArgumentException("Число столбцов в первой матрице должно быть равно числу строк во вторй");
+                throw new ArgumentException("Число столбцов в первой матрице должно быть равно числу строк во второй");
             }
 
-            Vec[] vectors = new Vec[matrix2.GetRowsCount()];
+            Vec[] vectors = new Vec[matrix1.GetRowsCount()];
 
             for (int i = 0; i < vectors.Length; i++)
             {
                 vectors[i] = new Vec(matrix2.GetСolumnsCount());
             }
 
-            for (int i = 0; i < matrix2.GetRowsCount(); i++)
+            for (int i = 0; i < matrix1.GetRowsCount(); i++)
             {
-                for (int j = 0; j < matrix1.GetСolumnsCount(); j++)
+                for (int j = 0; j < matrix2.GetСolumnsCount(); j++)
                 {
                     Vec columnVector = matrix2.GetColumn(j);
                     double x = Vec.GetScalarMultiplication(matrix1.Rows[i], columnVector);
