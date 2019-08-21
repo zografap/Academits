@@ -28,8 +28,8 @@ namespace ArrayList
             myList.Remove("тополь");
             Console.WriteLine("Удалим тополь получим: " + myList);
 
-            myList.RemoveAt("тополь");
-            Console.WriteLine("Удалим тополь получим: " + myList);
+            myList.RemoveAt(2);
+            Console.WriteLine("Удалим элемент по индексу 2 получим: " + myList);
 
             Console.ReadKey();
         }

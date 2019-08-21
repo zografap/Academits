@@ -63,7 +63,6 @@ namespace ArrayList
         {
             if (Count < Contents.Length)
             {
-
                 Contents[Count] = data;
                 Count++;
             }
@@ -85,6 +84,7 @@ namespace ArrayList
         public bool Contains(T data)
         {
             bool inList = false;
+
             for (int i = 0; i < Count; i++)
             {
                 if (Contents[i].Equals(data))
@@ -93,12 +93,14 @@ namespace ArrayList
                     break;
                 }
             }
+
             return inList;
         }
 
         public void CopyTo(T[] array, int arrayIndex)
         {
             int j = arrayIndex;
+
             for (int i = 0; i < Count; i++)
             {
                 array.SetValue(Contents[i], j);
@@ -146,8 +148,10 @@ namespace ArrayList
             if (Contains(item))
             {
                 RemoveAt(IndexOf(item));
+
                 return true;
             }
+
             return false;
         }
 
@@ -159,13 +163,14 @@ namespace ArrayList
                 {
                     Contents[i] = Contents[i + 1];
                 }
+
                 Count--;
             }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return GetEnumerator();
         }
 
         public override string ToString()
