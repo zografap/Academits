@@ -1,6 +1,6 @@
 ﻿namespace List
 {
-    class ListItem<T>
+    internal class ListItem<T>
     {
         public T Data { get; set; }
         public ListItem<T> Next { get; set; }

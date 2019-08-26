@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,43 +7,86 @@ using System.Threading.Tasks;
 
 namespace HashTable
 {
-    public class MyHashTable
+    class HashTable<T> : ICollection<T>
     {
-        private List<Person> ListPerson = new List<Person> { };
+        private static int Сapacity = 10;
 
-        private int length;
+        private List<T>[] ArrayHashTable = new List<T>[Сapacity];
 
-        private List<Person>[] PeopleArray = new List<Person>[10];
+        private List<T> ListItem = new List<T> { };
 
-        public MyHashTable()
+        public int Count { get; set; }
+
+        public HashTable()
         {
-            PeopleArray = new List<Person>[10];
+            List<T>[] ArrayHashTable = new List<T>[Сapacity];
+            Count = 0;
         }
 
-        public void Insert(Person person)
+        public bool IsReadOnly
         {
-            int index = Math.Abs(person.GetHashCode() % PeopleArray.Length);
-
-            if (PeopleArray[index] == null)
+            get
             {
-                PeopleArray[index] = new List<Person> { person };
+                return false;
+            }
+        }
+
+        public void Add(T item)
+        {
+            int index = Math.Abs(item.GetHashCode() % ArrayHashTable.Length);
+
+            if (ArrayHashTable[index] == null)
+            {
+                ArrayHashTable[index] = new List<T> { item };
+                Count++;
             }
             else
             {
-                if (PeopleArray[index].IndexOf(person) == -1)
+                if (ArrayHashTable[index].IndexOf(item) == -1)
                 {
-                    PeopleArray[index].Add(person);
+                    ArrayHashTable[index].Add(item);
+                    Count++;
                 }
                 else
                 {
-                    throw new ArgumentException("Хеш-таблица уже содержит такого человека");
+                    throw new ArgumentException("Хеш-таблица уже содержит такой элемент");
                 }
             }
         }
 
+        public void Clear()
+        {
+            foreach (List<T> e in ArrayHashTable)
+            {
+                e.Clear();
+            }
 
+            Count = 0;
+        }
 
+        public bool Contains(T item)
+        {
+            throw new NotImplementedException();
+        }
 
+        public void CopyTo(T[] array, int arrayIndex)
+        {
+            throw new NotImplementedException();
+        }
 
+        public IEnumerator<T> GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Remove(T item)
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
