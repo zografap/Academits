@@ -9,7 +9,7 @@ namespace ArrayList
     {
         public int Сapacity { get; set; }
 
-        public int ModCount { get; private set; }
+        private int ModCount;
 
         private T[] Contents;
 
@@ -17,7 +17,7 @@ namespace ArrayList
         {
             get
             {
-                if (index > Count - 1 || index < 0)
+                if (index >= Count || index < 0)
                 {
                     throw new IndexOutOfRangeException("index выходит за границы списка");
                 }
@@ -26,7 +26,7 @@ namespace ArrayList
             }
             set
             {
-                if (index > Count - 1 || index < 0)
+                if (index >= Count || index < 0)
                 {
                     throw new IndexOutOfRangeException("index выходит за границы списка");
                 }
@@ -60,36 +60,28 @@ namespace ArrayList
 
         public void Add(T data)
         {
-            if (Count < Contents.Length)
-            {
-                Contents[Count] = data;
-                Count++;
-                ModCount++;
-            }
-            else
+            if (Count >= Contents.Length)
             {
                 T[] contentsTmp = new T[Сapacity * 2];
                 Array.Copy(Contents, 0, contentsTmp, 0, Contents.Length);
                 Contents = contentsTmp;
-                Contents[Count] = data;
-                Count++;
-                ModCount++;
             }
+
+            Contents[Count] = data;
+            Count++;
+            ModCount++;
         }
 
         public void Clear()
         {
             Count = 0;
+            TrimExcess();
+            ModCount++;
         }
 
         public bool Contains(T data)
         {
-            if (IndexOf(data) != -1)
-            {
-                return true;
-            }
-
-            return false;
+            return Array.Exists(Contents, element => Equals(element, data));
         }
 
         public void CopyTo(T[] array, int arrayIndex)
@@ -115,28 +107,28 @@ namespace ArrayList
         public IEnumerator<T> GetEnumerator()
         {
             int modCount = ModCount;
+
             for (int i = 0; i < Contents.Length; ++i)
             {
                 if (modCount != ModCount)
                 {
-                    throw new Exception("Список был изменен!" );
+                    throw new InvalidOperationException("Список был изменен!");
                 }
+
                 yield return Contents[i];
             }
         }
 
         public int IndexOf(T data)
         {
-            int itemIndex = -1;
             for (int i = 0; i < Contents.Length; i++)
             {
                 if (Equals(data, Contents[i]))
                 {
-                    itemIndex = i;
-                    break;
+                    return i;
                 }
             }
-            return itemIndex;
+            return -1;
         }
 
         public void Insert(int index, T data)
@@ -157,14 +149,7 @@ namespace ArrayList
 
             Array.Copy(Contents, 0, contentsTmp, 0, Contents.Length);
 
-            if ((Count + 1 <= Contents.Length) && (index < Count) && (index >= 0))
-            {
-                Array.Copy(Contents, index, contentsTmp, index + 1, Contents.Length);
-                Contents = contentsTmp;
-                Contents[index] = data;
-            }
-
-            if (index == 0)
+            if ((Count + 1 <= Contents.Length) && (index < Count) && (index >= 0) || (index == 0))
             {
                 Array.Copy(Contents, index, contentsTmp, index + 1, Contents.Length);
                 Contents = contentsTmp;
@@ -194,17 +179,9 @@ namespace ArrayList
                 throw new IndexOutOfRangeException("index выходит за границы списка");
             }
 
-            if ((index >= 0) && (index < Count - 1))
+            if (index + 1 < Count)
             {
-                for (int i = index; i < Count - 1; i++)
-                {
-                    Contents[i] = Contents[i + 1];
-                }
-            }
-
-            if (index == Count - 1)
-            {
-                Contents[index] = default(T);
+                Array.Copy(Contents, index + 1, Contents, index, Count - index + 1);
             }
 
             Count--;
@@ -219,11 +196,19 @@ namespace ArrayList
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
+
+            if (Contents.Length == 0)
+            {
+                sb.Append("{ }");
+
+                return sb.ToString();
+            }
+
             sb.Append("{ ");
 
-            for (int i = 0; i < Contents.Length; i++)
+            foreach (T e in Contents)
             {
-                sb.Append(Contents[i]);
+                sb.Append(e);
                 sb.Append(", ");
             }
 

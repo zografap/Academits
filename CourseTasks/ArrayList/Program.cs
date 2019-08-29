@@ -33,6 +33,9 @@ namespace ArrayList
 
                 Console.WriteLine("Проверка на вхождение элемента  null = " + myList.Contains(null));
                 Console.WriteLine("Проверка на вхождение элемента  липа = " + myList.Contains("липа"));
+
+                myList.Clear();
+                Console.WriteLine("Очистим список: " + myList);
             }
             catch (IndexOutOfRangeException e)
             {
@@ -42,7 +45,7 @@ namespace ArrayList
             {
                 Console.WriteLine(e.ToString());
             }
-            catch (Exception e)
+            catch (InvalidOperationException e)
             {
                 Console.WriteLine(e.ToString());
             }
