@@ -29,7 +29,7 @@ namespace List
 
                 linkedList.InsertElementByIndex(3, "Сергей");
                 Console.WriteLine("Вставим элемент Сергей по индексу 3 получим: " + linkedList);
-                Console.ReadKey();
+
                 linkedList.DeleteNodeByValue("Андрей");
                 Console.WriteLine("Удалим элемент Андрей получим: " + linkedList);
 
