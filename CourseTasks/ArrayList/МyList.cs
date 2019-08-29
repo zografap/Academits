@@ -7,7 +7,7 @@ namespace ArrayList
 {
     class МyList<T> : IList<T>
     {
-        public int Сapacity { get; private set; }
+        public int Сapacity { get; set; }
 
         public int ModCount { get; private set; }
 

@@ -29,7 +29,7 @@ namespace List
 
                 linkedList.InsertElementByIndex(3, "Сергей");
                 Console.WriteLine("Вставим элемент Сергей по индексу 3 получим: " + linkedList);
-
+                Console.ReadKey();
                 linkedList.DeleteNodeByValue("Андрей");
                 Console.WriteLine("Удалим элемент Андрей получим: " + linkedList);
 
@@ -39,15 +39,29 @@ namespace List
                 linkedList.Reverse();
                 Console.WriteLine("Развернем список получим: " + linkedList);
 
-                SinglyLinkedList<string> copylinkedList = linkedList.Copy();
-                Console.WriteLine("Скопируем список получим: " + copylinkedList);
-
-
                 linkedList.DeleteItemByIndex(0);
                 Console.WriteLine("Удалим элемент с индексом 0 получим: " + linkedList);
 
-                linkedList.DeleteItemByIndex(1);
-                Console.WriteLine("Удалим элемент с индексом 1 получим: " + linkedList);
+                linkedList.InsertElementByIndex(0, "Сергей");
+                Console.WriteLine("Вставим элемент Сергей по индексу 0 получим: " + linkedList);
+
+                linkedList.AddToEnd("Андрей");
+                Console.WriteLine("Вставим элемент Андрей в конец списка: " + linkedList);
+
+                linkedList.DeleteFirstItem();
+                Console.WriteLine("Удалим первый элемент получим: " + linkedList);
+
+                linkedList.DeleteFirstItem();
+                Console.WriteLine("Удалим первый элемент получим: " + linkedList);
+
+                linkedList.DeleteFirstItem();
+                Console.WriteLine("Удалим первый элемент получим: " + linkedList);
+
+                linkedList.DeleteFirstItem();
+                Console.WriteLine("Удалим первый элемент получим: " + linkedList);
+
+                Console.WriteLine("Скопируем список получим: " + linkedList.Copy());
+                Console.ReadKey();
             }
             catch (IndexOutOfRangeException e)
             {

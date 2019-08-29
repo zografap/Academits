@@ -11,9 +11,9 @@ namespace HashTable
     {
         private static int Сapacity = 10;
 
-        private List<T>[] ArrayHashTable = new List<T>[Сapacity];
+        private List<T>[] ArrayHashTable;
 
-        private List<T> ListItem = new List<T> { };
+        private List<T> ListItem ;
 
         public int Count { get; set; }
 
@@ -66,7 +66,14 @@ namespace HashTable
 
         public bool Contains(T item)
         {
-            throw new NotImplementedException();
+            int index = Math.Abs(item.GetHashCode() % ArrayHashTable.Length);
+
+            if (ArrayHashTable[index].IndexOf(item) == -1)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public void CopyTo(T[] array, int arrayIndex)
