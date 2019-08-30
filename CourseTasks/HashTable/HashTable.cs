@@ -1,26 +1,30 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HashTable
 {
     class HashTable<T> : ICollection<T>
     {
-        private static int Сapacity = 10;
+        public int Сapacity { get; set; }
 
         private List<T>[] ArrayHashTable;
 
-        private List<T> ListItem ;
+        private List<T> ListItem;
 
         public int Count { get; set; }
 
         public HashTable()
         {
+            Сapacity = 10;
             List<T>[] ArrayHashTable = new List<T>[Сapacity];
+
+            for (int i = 0; i < Сapacity; ++i)
+            {
+                ArrayHashTable[i] = new List<T>() { default(T) };
+            }
             Count = 0;
+
         }
 
         public bool IsReadOnly
@@ -33,25 +37,24 @@ namespace HashTable
 
         public void Add(T item)
         {
-            int index = Math.Abs(item.GetHashCode() % ArrayHashTable.Length);
+            int index = Math.Abs(item.GetHashCode() % Сapacity);
 
-            if (ArrayHashTable[index] == null)
+            if (Equals(ArrayHashTable[index], null))
             {
-                ArrayHashTable[index] = new List<T> { item };
+                ArrayHashTable[index] = new List<T>();
+                ArrayHashTable[index].Add(item);
+            }
+
+            if (ArrayHashTable[index].IndexOf(item) == -1)
+            {
+                ArrayHashTable[index].Add(item);
                 Count++;
             }
             else
             {
-                if (ArrayHashTable[index].IndexOf(item) == -1)
-                {
-                    ArrayHashTable[index].Add(item);
-                    Count++;
-                }
-                else
-                {
-                    throw new ArgumentException("Хеш-таблица уже содержит такой элемент");
-                }
+                throw new ArgumentException("Хеш-таблица уже содержит такой элемент");
             }
+
         }
 
         public void Clear()
@@ -78,7 +81,28 @@ namespace HashTable
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            throw new NotImplementedException();
+            if (array == null)
+            {
+                throw new ArgumentNullException("целевой массив не может быть null");
+            }
+
+            if (arrayIndex < 0 || arrayIndex >= array.Length)
+            {
+                throw new ArgumentOutOfRangeException("индекс должен быть от 0 до " + (array.Length - 1));
+            }
+
+            if (Count > array.Length - arrayIndex)
+            {
+                throw new ArgumentOutOfRangeException("Измените входные данные, копируемые данные не помещаются");
+            }
+
+            int index = arrayIndex;
+
+            foreach (List<T> e in ArrayHashTable)
+            {
+                Array.Copy(e.ToArray(), 0, array, index, e.Count);
+                index += e.Count;
+            }
         }
 
         public IEnumerator<T> GetEnumerator()
