@@ -48,19 +48,21 @@ namespace List
                 linkedList.AddToEnd("Андрей");
                 Console.WriteLine("Вставим элемент Андрей в конец списка: " + linkedList);
 
-                linkedList.DeleteFirstItem();
-                Console.WriteLine("Удалим первый элемент получим: " + linkedList);
+                //linkedList.DeleteFirstItem();
+                //Console.WriteLine("Удалим первый элемент получим: " + linkedList);
 
-                linkedList.DeleteFirstItem();
-                Console.WriteLine("Удалим первый элемент получим: " + linkedList);
+                //linkedList.DeleteFirstItem();
+                //Console.WriteLine("Удалим первый элемент получим: " + linkedList);
 
-                linkedList.DeleteFirstItem();
-                Console.WriteLine("Удалим первый элемент получим: " + linkedList);
+                //linkedList.DeleteFirstItem();
+                //Console.WriteLine("Удалим первый элемент получим: " + linkedList);
 
-                linkedList.DeleteFirstItem();
-                Console.WriteLine("Удалим первый элемент получим: " + linkedList);
+                //linkedList.DeleteFirstItem();
+                //Console.WriteLine("Удалим первый элемент получим: " + linkedList);
 
-                Console.WriteLine("Скопируем список получим: " + linkedList.Copy());
+                SinglyLinkedList<string> copyLinkedList = linkedList.Copy();
+
+                Console.WriteLine("Скопируем список получим: " + copyLinkedList);
                 Console.ReadKey();
             }
             catch (IndexOutOfRangeException e)

@@ -7,11 +7,11 @@ namespace ArrayList
 {
     class МyList<T> : IList<T>
     {
-        public int Сapacity { get; set; }
+        public int Capacity { get; private set; }
 
-        private int ModCount;
+        private int modCount;
 
-        private T[] Contents;
+        private T[] contents;
 
         public T this[int index]
         {
@@ -22,7 +22,7 @@ namespace ArrayList
                     throw new IndexOutOfRangeException("index выходит за границы списка");
                 }
 
-                return Contents[index];
+                return contents[index];
             }
             set
             {
@@ -31,7 +31,7 @@ namespace ArrayList
                     throw new IndexOutOfRangeException("index выходит за границы списка");
                 }
 
-                Contents[index] = value;
+                contents[index] = value;
             }
         }
 
@@ -40,14 +40,14 @@ namespace ArrayList
         public МyList()
         {
             Count = 0;
-            Сapacity = 10;
-            ModCount = 0;
-            Contents = new T[Сapacity];
+            Capacity = 10;
+            modCount = 0;
+            contents = new T[Capacity];
         }
 
         public void TrimExcess()
         {
-            Array.Resize(ref Contents, Count);
+            Array.Resize(ref contents, Count);
         }
 
         public bool IsReadOnly
@@ -60,28 +60,36 @@ namespace ArrayList
 
         public void Add(T data)
         {
-            if (Count >= Contents.Length)
+            if (Count >= contents.Length)
             {
-                T[] contentsTmp = new T[Сapacity * 2];
-                Array.Copy(Contents, 0, contentsTmp, 0, Contents.Length);
-                Contents = contentsTmp;
+                Array.Resize(ref contents, Count + 1);
             }
 
-            Contents[Count] = data;
+            contents[Count] = data;
             Count++;
-            ModCount++;
+            modCount++;
         }
 
         public void Clear()
         {
             Count = 0;
-            TrimExcess();
-            ModCount++;
+
+            for (int i = 0; i < contents.Length; ++i)
+            {
+                contents[i] = default(T);
+            }
+
+            modCount++;
         }
 
         public bool Contains(T data)
         {
-            return Array.Exists(Contents, element => Equals(element, data));
+            if (IndexOf(data) == -1)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public void CopyTo(T[] array, int arrayIndex)
@@ -96,38 +104,39 @@ namespace ArrayList
                 throw new ArgumentOutOfRangeException("индекс должен быть от 0 до " + (array.Length - 1));
             }
 
-            if (Contents.Length > array.Length - arrayIndex)
+            if (contents.Length > array.Length - arrayIndex)
             {
                 throw new ArgumentOutOfRangeException("Измените входные данные, копируемый массив не помещается");
             }
 
-            Array.Copy(Contents, 0, array, arrayIndex, Count);
+            Array.Copy(contents, 0, array, arrayIndex, Count);
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            int modCount = ModCount;
+            int modCount = this.modCount;
 
-            for (int i = 0; i < Contents.Length; ++i)
+            for (int i = 0; i < Count; ++i)
             {
-                if (modCount != ModCount)
+                if (modCount != this.modCount)
                 {
                     throw new InvalidOperationException("Список был изменен!");
                 }
 
-                yield return Contents[i];
+                yield return contents[i];
             }
         }
 
         public int IndexOf(T data)
         {
-            for (int i = 0; i < Contents.Length; i++)
+            for (int i = 0; i < Count; i++)
             {
-                if (Equals(data, Contents[i]))
+                if (Equals(data, contents[i]))
                 {
                     return i;
                 }
             }
+
             return -1;
         }
 
@@ -139,25 +148,25 @@ namespace ArrayList
             }
 
             Count++;
-            ModCount++;
-            T[] contentsTmp = new T[Сapacity];
+            modCount++;
+            T[] contentsTmp = new T[Capacity];
 
-            if (Count >= Contents.Length)
+            if (Count >= contents.Length)
             {
-                contentsTmp = new T[Сapacity * 2];
+                contentsTmp = new T[Capacity * 2];
             }
 
-            Array.Copy(Contents, 0, contentsTmp, 0, Contents.Length);
+            Array.Copy(contents, 0, contentsTmp, 0, contents.Length);
 
-            if ((Count + 1 <= Contents.Length) && (index < Count) && (index >= 0) || (index == 0))
+            if ((Count + 1 <= contents.Length) && (index < Count) && (index >= 0) || (index == 0))
             {
-                Array.Copy(Contents, index, contentsTmp, index + 1, Contents.Length);
-                Contents = contentsTmp;
-                Contents[index] = data;
+                Array.Copy(contents, index, contentsTmp, index + 1, contents.Length);
+                contents = contentsTmp;
+                contents[index] = data;
             }
 
-            Contents = contentsTmp;
-            Contents[index] = data;
+            contents = contentsTmp;
+            contents[index] = data;
         }
 
         public bool Remove(T item)
@@ -181,11 +190,11 @@ namespace ArrayList
 
             if (index + 1 < Count)
             {
-                Array.Copy(Contents, index + 1, Contents, index, Count - index + 1);
+                Array.Copy(contents, index + 1, contents, index, Count - index - 1);
             }
 
             Count--;
-            ModCount++;
+            modCount++;
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -197,7 +206,7 @@ namespace ArrayList
         {
             StringBuilder sb = new StringBuilder();
 
-            if (Contents.Length == 0)
+            if (contents.Length == 0)
             {
                 sb.Append("{ }");
 
@@ -206,7 +215,7 @@ namespace ArrayList
 
             sb.Append("{ ");
 
-            foreach (T e in Contents)
+            foreach (T e in contents)
             {
                 sb.Append(e);
                 sb.Append(", ");

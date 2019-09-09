@@ -36,6 +36,7 @@ namespace List
                 if (n == index)
                 {
                     result = p;
+                    break;
                 }
                 n++;
             }
@@ -64,39 +65,20 @@ namespace List
                 throw new IndexOutOfRangeException("index выходит за границы списка");
             }
 
-            if (Count == 0)
-            {
-                throw new Exception("Список пуст");
-            }
-
             Count--;
 
-            if (Head != null && index < Count && index >= 0)
+            if (index == 0)
             {
-                ListItem<T> temp = Head;
-                ListItem<T> pref = Head;
-
-                for (int i = 0; i < index; i++)
-                {
-                    pref = temp;
-                    temp = temp.Next;
-                }
-
-                if (temp == Head)
-                {
-                    Head = temp.Next;
-
-                    return temp.Data;
-                }
-                else
-                {
-                    pref.Next = temp.Next;
-
-                    return temp.Data;
-                }
+                Head = Head.Next;
+                return Head.Data;
             }
 
-            return default(T);
+            ListItem<T> pref = IterateToIndex(index - 1);
+            ListItem<T> temp = pref.Next;
+
+            pref.Next = temp.Next;
+
+            return temp.Data;
         }
 
         public void InsertElementToBeginning(T data)
@@ -198,49 +180,49 @@ namespace List
             {
                 return copyList;
             }
-            else
+
+            copyList.InsertElementToBeginning(Head.Data);
+
+            for (ListItem<T> p = Head.Next, prev = copyList.Head; p != null; prev = prev.Next, p = p.Next)
             {
-                for (ListItem<T> p = Head, prev = null; p != null; prev = p, p = p.Next)
-                {
-                    ListItem<T> listItem = new ListItem<T>(p.Data);
-                    copyList.InsertElementToBeginning(listItem.Data);
-                    copyList.Head = prev;
-                }
-
-                copyList.InsertElementToBeginning(Head.Data);
-                copyList.Count = Count;
-
-                return copyList;
+                prev.Next = new ListItem<T>(p.Data);
             }
+
+           
+            copyList.Count = Count;
+
+            return copyList;
+
         }
 
-        public override string ToString()
+
+    public override string ToString()
+    {
+        StringBuilder sb = new StringBuilder();
+
+        if (Count == 0)
         {
-            StringBuilder sb = new StringBuilder();
-
-            if (Count == 0)
-            {
-                sb.Append("{ }");
-
-                return sb.ToString();
-            }
-
-            sb.Append("{ ");
-
-            for (ListItem<T> p = Head; p != null; p = p.Next)
-            {
-                if (p.Data == null)
-                {
-                    sb.Append("null");
-                }
-                sb.Append(p.Data);
-                sb.Append(", ");
-            }
-
-            sb.Remove(sb.Length - 2, 2);
-            sb.Append(" }");
+            sb.Append("{ }");
 
             return sb.ToString();
         }
+
+        sb.Append("{ ");
+
+        for (ListItem<T> p = Head; p != null; p = p.Next)
+        {
+            if (p.Data == null)
+            {
+                sb.Append("null");
+            }
+            sb.Append(p.Data);
+            sb.Append(", ");
+        }
+
+        sb.Remove(sb.Length - 2, 2);
+        sb.Append(" }");
+
+        return sb.ToString();
     }
+}
 }

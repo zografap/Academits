@@ -8,7 +8,7 @@ namespace HashTable
     {
         public int Сapacity { get; set; }
 
-        private List<T>[] ArrayHashTable;
+        private List<T>[] ArrayHashTable = new List<T>[10];
 
         private List<T> ListItem;
 
@@ -17,11 +17,11 @@ namespace HashTable
         public HashTable()
         {
             Сapacity = 10;
-            List<T>[] ArrayHashTable = new List<T>[Сapacity];
-
+            ArrayHashTable = new List<T>[Сapacity];
+                
             for (int i = 0; i < Сapacity; ++i)
             {
-                ArrayHashTable[i] = new List<T>() { default(T) };
+                ArrayHashTable[i] = null;
             }
             Count = 0;
 
@@ -39,21 +39,22 @@ namespace HashTable
         {
             int index = Math.Abs(item.GetHashCode() % Сapacity);
 
-            if (Equals(ArrayHashTable[index], null))
-            {
-                ArrayHashTable[index] = new List<T>();
-                ArrayHashTable[index].Add(item);
-            }
+            //if (Equals(ArrayHashTable[index], null))
+            //{
+                List < T > list = new List<T>();
+                list.Add(item);
+            list = ArrayHashTable[index];
+            //}
 
-            if (ArrayHashTable[index].IndexOf(item) == -1)
-            {
-                ArrayHashTable[index].Add(item);
-                Count++;
-            }
-            else
-            {
-                throw new ArgumentException("Хеш-таблица уже содержит такой элемент");
-            }
+            //if (ArrayHashTable[index].IndexOf(item) == -1)
+            //{
+            //    ArrayHashTable[index].Add(item);
+            //    Count++;
+            //}
+            //else
+            //{
+            //    throw new ArgumentException("Хеш-таблица уже содержит такой элемент");
+            //}
 
         }
 
