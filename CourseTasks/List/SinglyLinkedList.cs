@@ -9,13 +9,11 @@ namespace List
 
         public int Count { get; private set; }
 
-        public SinglyLinkedList() { }
-
         public T GetFirstElementValue()
         {
             if (Count == 0)
             {
-                throw new ArgumentException("В списке нет элементов");
+                throw new Exception("В списке нет элементов");
             }
 
             return Head.Data;
@@ -73,10 +71,10 @@ namespace List
                 return Head.Data;
             }
 
-            ListItem<T> pref = IterateToIndex(index - 1);
-            ListItem<T> temp = pref.Next;
+            ListItem<T> prev = IterateToIndex(index - 1);
+            ListItem<T> temp = prev.Next;
 
-            pref.Next = temp.Next;
+            prev.Next = temp.Next;
 
             return temp.Data;
         }
@@ -99,18 +97,16 @@ namespace List
             {
                 InsertElementToBeginning(data);
             }
-            else if (index == Count)
-            {
-                ListItem<T> prev = IterateToIndex(index - 1);
-                ListItem<T> listItem = new ListItem<T>(data);
-                prev.Next = listItem;
-                Count++;
-            }
             else
             {
-                ListItem<T> listItem = new ListItem<T>(data);
                 ListItem<T> prev = IterateToIndex(index - 1);
-                listItem.Next = prev.Next;
+                ListItem<T> listItem = new ListItem<T>(data);
+
+                if (index != Count)
+                {
+                    listItem.Next = prev.Next;
+                }
+
                 prev.Next = listItem;
                 Count++;
             }
@@ -188,7 +184,7 @@ namespace List
                 prev.Next = new ListItem<T>(p.Data);
             }
 
-           
+
             copyList.Count = Count;
 
             return copyList;
@@ -196,33 +192,33 @@ namespace List
         }
 
 
-    public override string ToString()
-    {
-        StringBuilder sb = new StringBuilder();
-
-        if (Count == 0)
+        public override string ToString()
         {
-            sb.Append("{ }");
+            StringBuilder sb = new StringBuilder();
+
+            if (Count == 0)
+            {
+                sb.Append("{ }");
+
+                return sb.ToString();
+            }
+
+            sb.Append("{ ");
+
+            for (ListItem<T> p = Head; p != null; p = p.Next)
+            {
+                if (p.Data == null)
+                {
+                    sb.Append("null");
+                }
+                sb.Append(p.Data);
+                sb.Append(", ");
+            }
+
+            sb.Remove(sb.Length - 2, 2);
+            sb.Append(" }");
 
             return sb.ToString();
         }
-
-        sb.Append("{ ");
-
-        for (ListItem<T> p = Head; p != null; p = p.Next)
-        {
-            if (p.Data == null)
-            {
-                sb.Append("null");
-            }
-            sb.Append(p.Data);
-            sb.Append(", ");
-        }
-
-        sb.Remove(sb.Length - 2, 2);
-        sb.Append(" }");
-
-        return sb.ToString();
     }
-}
 }

@@ -48,18 +48,6 @@ namespace List
                 linkedList.AddToEnd("Андрей");
                 Console.WriteLine("Вставим элемент Андрей в конец списка: " + linkedList);
 
-                //linkedList.DeleteFirstItem();
-                //Console.WriteLine("Удалим первый элемент получим: " + linkedList);
-
-                //linkedList.DeleteFirstItem();
-                //Console.WriteLine("Удалим первый элемент получим: " + linkedList);
-
-                //linkedList.DeleteFirstItem();
-                //Console.WriteLine("Удалим первый элемент получим: " + linkedList);
-
-                //linkedList.DeleteFirstItem();
-                //Console.WriteLine("Удалим первый элемент получим: " + linkedList);
-
                 SinglyLinkedList<string> copyLinkedList = linkedList.Copy();
 
                 Console.WriteLine("Скопируем список получим: " + copyLinkedList);
