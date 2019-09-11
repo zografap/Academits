@@ -149,23 +149,21 @@ namespace ArrayList
 
             Count++;
             modCount++;
-            T[] contentsTmp = new T[Capacity];
 
             if (Count >= contents.Length)
             {
-                contentsTmp = new T[Capacity * 2];
+                Capacity *= 2;
+                Array.Resize(ref contents, Capacity);
             }
-
-            Array.Copy(contents, 0, contentsTmp, 0, contents.Length);
 
             if ((Count + 1 <= contents.Length) && (index < Count) && (index >= 0) || (index == 0))
             {
-                Array.Copy(contents, index, contentsTmp, index + 1, contents.Length);
+                T[] contentsTmp = new T[Capacity];
+                Array.Copy(contents, index, contentsTmp, index + 1, Count - index - 1);
                 contents = contentsTmp;
                 contents[index] = data;
             }
 
-            contents = contentsTmp;
             contents[index] = data;
         }
 
@@ -215,9 +213,9 @@ namespace ArrayList
 
             sb.Append("{ ");
 
-            foreach (T e in contents)
+            for (int i = 0; i < Count; i++)
             {
-                sb.Append(e);
+                sb.Append(contents[i]);
                 sb.Append(", ");
             }
 

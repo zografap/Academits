@@ -25,8 +25,8 @@ namespace ArrayList
                 myList.Insert(0, "тополь");
                 Console.WriteLine("Вставим тополь по индексу 0 получим: " + myList);
 
-                myList.Remove("акация");
-                Console.WriteLine("Удалим акация получим: " + myList);
+                myList.Remove("рябина");
+                Console.WriteLine("Удалим рябина получим: " + myList);
 
                 myList.RemoveAt(2);
                 Console.WriteLine("Удалим элемент по индексу 2 получим: " + myList);
