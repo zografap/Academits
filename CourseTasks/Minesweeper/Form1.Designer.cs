@@ -960,8 +960,8 @@
             this.таблицаРезультатовToolStripMenuItem,
             this.выходToolStripMenuItem});
             this.иГРАToolStripMenuItem.Name = "иГРАToolStripMenuItem";
-            this.иГРАToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
-            this.иГРАToolStripMenuItem.Text = "ИГРА";
+            this.иГРАToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
+            this.иГРАToolStripMenuItem.Text = "Game";
             // 
             // новаяИграToolStripMenuItem
             // 
@@ -978,20 +978,20 @@
             // среднийУровеньToolStripMenuItem
             // 
             this.среднийУровеньToolStripMenuItem.Name = "среднийУровеньToolStripMenuItem";
-            this.среднийУровеньToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.среднийУровеньToolStripMenuItem.Text = "Средний уровень";
+            this.среднийУровеньToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.среднийУровеньToolStripMenuItem.Text = "Intermediate";
             // 
             // экспертToolStripMenuItem
             // 
             this.экспертToolStripMenuItem.Name = "экспертToolStripMenuItem";
-            this.экспертToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.экспертToolStripMenuItem.Text = "Эксперт";
+            this.экспертToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.экспертToolStripMenuItem.Text = "Expert";
             // 
             // таблицаРезультатовToolStripMenuItem
             // 
             this.таблицаРезультатовToolStripMenuItem.Name = "таблицаРезультатовToolStripMenuItem";
-            this.таблицаРезультатовToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.таблицаРезультатовToolStripMenuItem.Text = "Таблица результатов";
+            this.таблицаРезультатовToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.таблицаРезультатовToolStripMenuItem.Text = "High Scores";
             // 
             // выходToolStripMenuItem
             // 

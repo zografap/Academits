@@ -13,7 +13,7 @@ namespace List
         {
             if (Count == 0)
             {
-                throw new Exception("В списке нет элементов");
+                throw new InvalidOperationException ("В списке нет элементов");
             }
 
             return Head.Data;
@@ -101,12 +101,7 @@ namespace List
             {
                 ListItem<T> prev = IterateToIndex(index - 1);
                 ListItem<T> listItem = new ListItem<T>(data);
-
-                if (index != Count)
-                {
-                    listItem.Next = prev.Next;
-                }
-
+                listItem.Next = prev.Next;
                 prev.Next = listItem;
                 Count++;
             }

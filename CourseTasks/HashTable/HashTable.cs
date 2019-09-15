@@ -1,30 +1,32 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 
 namespace HashTable
 {
     class HashTable<T> : ICollection<T>
     {
-        public int Сapacity { get; set; }
+        public int Сapacity { get; private set; }
 
-        private List<T>[] ArrayHashTable = new List<T>[10];
+        public List<T>[] ArrayHashTable;
 
-        private List<T> ListItem;
+        public int Count { get; private set; }
 
-        public int Count { get; set; }
+        private int modCount;
 
         public HashTable()
         {
             Сapacity = 10;
             ArrayHashTable = new List<T>[Сapacity];
-                
+
             for (int i = 0; i < Сapacity; ++i)
             {
-                ArrayHashTable[i] = null;
+                ArrayHashTable[i] = new List<T>() { };
             }
-            Count = 0;
 
+            Count = 0;
+            modCount = 0;
         }
 
         public bool IsReadOnly
@@ -39,23 +41,16 @@ namespace HashTable
         {
             int index = Math.Abs(item.GetHashCode() % Сapacity);
 
-            //if (Equals(ArrayHashTable[index], null))
-            //{
-                List < T > list = new List<T>();
-                list.Add(item);
-            list = ArrayHashTable[index];
-            //}
-
-            //if (ArrayHashTable[index].IndexOf(item) == -1)
-            //{
-            //    ArrayHashTable[index].Add(item);
-            //    Count++;
-            //}
-            //else
-            //{
-            //    throw new ArgumentException("Хеш-таблица уже содержит такой элемент");
-            //}
-
+            if (ArrayHashTable[index].IndexOf(item) == -1)
+            {
+                ArrayHashTable[index].Add(item);
+                Count++;
+                modCount++;
+            }
+            else
+            {
+                throw new ArgumentException("Хеш-таблица уже содержит такой элемент");
+            }
         }
 
         public void Clear()
@@ -66,6 +61,7 @@ namespace HashTable
             }
 
             Count = 0;
+            modCount++;
         }
 
         public bool Contains(T item)
@@ -108,17 +104,83 @@ namespace HashTable
 
         public IEnumerator<T> GetEnumerator()
         {
-            throw new NotImplementedException();
+            int modCount = this.modCount;
+
+            for (int i = 0; i < Сapacity; ++i)
+            {
+                if (ArrayHashTable[i].Count == 0)
+                {
+                    continue;
+                }
+                else
+                {
+                    for (int k = 0; k < ArrayHashTable[i].Count; ++k)
+                    {
+                        if (modCount != this.modCount)
+                        {
+                            throw new InvalidOperationException("Таблица была изменена!");
+                        }
+
+                        yield return ArrayHashTable[i][k];
+                    }
+                }
+            }
         }
 
         public bool Remove(T item)
         {
-            throw new NotImplementedException();
+            if (Contains(item))
+            {
+                int index = Math.Abs(item.GetHashCode() % ArrayHashTable.Length);
+                ArrayHashTable[index].Remove(item);
+                Count--;
+                modCount++;
+                return true;
+            }
+
+            return false;
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return GetEnumerator();
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            if (Count == 0)
+            {
+                sb.Append("{ }");
+
+                return sb.ToString();
+            }
+
+            foreach (List<T> e in ArrayHashTable)
+            {
+                if (e.Count == 0)
+                {
+                    sb.Append("{ }" + Environment.NewLine);
+                }
+
+                sb.Append("{ ");
+
+                foreach (T i in e)
+                {
+                    sb.Append(i.ToString());
+                    sb.Append(", ");
+                }
+
+                sb.Remove(sb.Length - 2, 2);
+
+                if (e.Count != 0)
+                {
+                    sb.Append(" }" + Environment.NewLine);
+                }
+            }
+
+            return sb.ToString();
         }
     }
 }

@@ -57,7 +57,7 @@ namespace List
             {
                 Console.WriteLine(e.ToString());
             }
-            catch (Exception e)
+            catch (InvalidOperationException e)
             {
                 Console.WriteLine(e.ToString());
             }
